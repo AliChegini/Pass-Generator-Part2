@@ -40,6 +40,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //test()
+        hideButtons()
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,11 +49,32 @@ class ViewController: UIViewController {
     }
     
     
+    
     @IBAction func guestActivated(_ sender: UIButton) {
+        showButtons()
         button1.setTitle("Child", for: .normal)
         button2.setTitle("Adult", for: .normal)
         button3.setTitle("Senior", for: .normal)
         button4.setTitle("VIP", for: .normal)
+    }
+    
+    
+    @IBAction func employeeActivated(_ sender: UIButton) {
+        showButtons()
+        button1.setTitle("Food Service", for: .normal)
+        button2.setTitle("Ride Service", for: .normal)
+        button3.setTitle("Maintenance", for: .normal)
+        button4.setTitle("Contract", for: .normal)
+    }
+    
+    
+    @IBAction func managerActivated(_ sender: UIButton) {
+        hideButtons()
+    }
+    
+    
+    @IBAction func vendorActivated(_ sender: UIButton) {
+        hideButtons()
     }
     
     
@@ -66,6 +88,30 @@ class ViewController: UIViewController {
             company.isEnabled = false
         }
     }
+    
+    
+    // Helper methods
+    func hideButtons() {
+        button1.isHidden = true
+        button2.isHidden = true
+        button3.isHidden = true
+        button4.isHidden = true
+    }
+    
+    func showButtons() {
+        button1.isHidden = false
+        button2.isHidden = false
+        button3.isHidden = false
+        button4.isHidden = false
+        
+    }
+    
+    // function to disable all the textfields and change their colors
+    func disableAllTextFields() {
+        
+    }
+    
+    
     
 
 }
