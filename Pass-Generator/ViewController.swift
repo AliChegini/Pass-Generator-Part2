@@ -77,17 +77,58 @@ class ViewController: UIViewController {
         hideButtons()
     }
     
+    func disableAllTextFields() {
+        disableTextField(textField: dateOfBirth)
+        disableTextField(textField: ssn)
+        disableTextField(textField: project)
+        disableTextField(textField: firstName)
+        disableTextField(textField: lastName)
+        disableTextField(textField: company)
+        disableTextField(textField: streetAddress)
+        disableTextField(textField: city)
+        disableTextField(textField: state)
+        disableTextField(textField: zipCode)
+    }
+    
+    func disableTextField(textField: UITextField){
+        textField.isEnabled = false
+        textField.backgroundColor = UIColor.lightGray
+    }
+    
+    func enableTextField(textField: UITextField) {
+        textField.isEnabled = true
+        textField.backgroundColor = UIColor.white
+    }
     
     @IBAction func childActivated(_ sender: UIButton) {
         if sender.title(for: .normal) == "Child" {
-            ssn.isEnabled = false
-            ssn.backgroundColor = UIColor.lightGray
-            project.isEnabled = false
-            firstName.isEnabled = false
-            lastName.isEnabled = false
-            company.isEnabled = false
+            disableAllTextFields()
+            enableTextField(textField: dateOfBirth)
         }
     }
+    
+    @IBAction func adultActivated(_ sender: UIButton) {
+        if sender.title(for: .normal) == "Adult" {
+            disableAllTextFields()
+        }
+    }
+    
+    @IBAction func seniorActivated(_ sender: UIButton) {
+        if sender.title(for: .normal) == "Senior" {
+            disableAllTextFields()
+            enableTextField(textField: dateOfBirth)
+        }
+    }
+    
+    @IBAction func vipActivated(_ sender: UIButton) {
+        if sender.title(for: .normal) == "VIP" {
+            disableAllTextFields()
+        }
+    }
+    
+    
+    
+    
     
     
     // Helper methods
@@ -105,12 +146,6 @@ class ViewController: UIViewController {
         button4.isHidden = false
         
     }
-    
-    // function to disable all the textfields and change their colors
-    func disableAllTextFields() {
-        
-    }
-    
     
     
 
