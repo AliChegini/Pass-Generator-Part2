@@ -34,8 +34,6 @@ class ViewController: UIViewController {
     
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -70,65 +68,64 @@ class ViewController: UIViewController {
     
     @IBAction func managerActivated(_ sender: UIButton) {
         hideButtons()
+        enableAllTextField()
     }
     
     
     @IBAction func vendorActivated(_ sender: UIButton) {
         hideButtons()
+        enableAllTextField()
     }
     
-    func disableAllTextFields() {
-        disableTextField(textField: dateOfBirth)
-        disableTextField(textField: ssn)
-        disableTextField(textField: project)
-        disableTextField(textField: firstName)
-        disableTextField(textField: lastName)
-        disableTextField(textField: company)
-        disableTextField(textField: streetAddress)
-        disableTextField(textField: city)
-        disableTextField(textField: state)
-        disableTextField(textField: zipCode)
-    }
     
-    func disableTextField(textField: UITextField){
-        textField.isEnabled = false
-        textField.backgroundColor = UIColor.lightGray
-    }
     
-    func enableTextField(textField: UITextField) {
-        textField.isEnabled = true
-        textField.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func childActivated(_ sender: UIButton) {
-        if sender.title(for: .normal) == "Child" {
+    @IBAction func button1Activated(_ sender: UIButton) {
+        if sender.currentTitle == "Child" {
             disableAllTextFields()
             enableTextField(textField: dateOfBirth)
         }
-    }
-    
-    @IBAction func adultActivated(_ sender: UIButton) {
-        if sender.title(for: .normal) == "Adult" {
-            disableAllTextFields()
+        
+        if sender.currentTitle == "Food Service" {
+            enableAllTextField()
         }
     }
     
-    @IBAction func seniorActivated(_ sender: UIButton) {
-        if sender.title(for: .normal) == "Senior" {
+    
+    
+    @IBAction func button2Activated(_ sender: UIButton) {
+        if sender.currentTitle == "Adult" {
+            disableAllTextFields()
+        }
+        
+        if sender.currentTitle == "Ride Service" {
+            enableAllTextField()
+        }
+    }
+    
+    
+    
+    @IBAction func button3Activated(_ sender: UIButton) {
+        if sender.currentTitle == "Senior" {
             disableAllTextFields()
             enableTextField(textField: dateOfBirth)
         }
-    }
-    
-    @IBAction func vipActivated(_ sender: UIButton) {
-        if sender.title(for: .normal) == "VIP" {
-            disableAllTextFields()
+        
+        if sender.currentTitle == "Maintenance" {
+            enableAllTextField()
         }
     }
     
     
-    
-    
+   
+    @IBAction func button4Activated(_ sender: UIButton) {
+        if sender.currentTitle == "VIP" {
+             disableAllTextFields()
+        }
+        
+        if sender.currentTitle == "Contract" {
+            enableAllTextField()
+        }
+    }
     
     
     // Helper methods
@@ -145,6 +142,45 @@ class ViewController: UIViewController {
         button3.isHidden = false
         button4.isHidden = false
         
+    }
+    
+    
+    func disableAllTextFields() {
+        disableTextField(textField: dateOfBirth)
+        disableTextField(textField: ssn)
+        disableTextField(textField: project)
+        disableTextField(textField: firstName)
+        disableTextField(textField: lastName)
+        disableTextField(textField: company)
+        disableTextField(textField: streetAddress)
+        disableTextField(textField: city)
+        disableTextField(textField: state)
+        disableTextField(textField: zipCode)
+    }
+    
+    func enableAllTextField() {
+        enableTextField(textField: dateOfBirth)
+        enableTextField(textField: ssn)
+        enableTextField(textField: project)
+        enableTextField(textField: firstName)
+        enableTextField(textField: lastName)
+        enableTextField(textField: company)
+        enableTextField(textField: streetAddress)
+        enableTextField(textField: city)
+        enableTextField(textField: state)
+        enableTextField(textField: zipCode)
+    }
+    
+    
+    func disableTextField(textField: UITextField){
+        textField.isEnabled = false
+        textField.backgroundColor = UIColor.lightGray
+    }
+    
+    
+    func enableTextField(textField: UITextField) {
+        textField.isEnabled = true
+        textField.backgroundColor = UIColor.white
     }
     
     
