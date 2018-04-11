@@ -183,6 +183,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="specialDateTextFieldClick:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="shn-AF-Tnk"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-Ir-xAo">
                                         <rect key="frame" x="242.5" y="0.0" width="223" height="50"/>

@@ -32,7 +32,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var state: UITextField!
     @IBOutlet weak var zipCode: UITextField!
     
-    
+    var firstRowButton: FirstRowButtonType? = nil
+    var secondRowButton: SecondRowButtonType? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,11 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        
+        let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
+        
+        dateOfBirth.inputAccessoryView = toolBar
         
     }
 
@@ -59,10 +65,15 @@ class ViewController: UIViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0{
+            if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y += keyboardSize.height/2
             }
         }
+    }
+    
+    
+    @objc func dismissPicker() {
+        view.endEditing(true)
     }
 
     
@@ -80,6 +91,8 @@ class ViewController: UIViewController {
         button2.setTitle("Adult", for: .normal)
         button3.setTitle("Senior", for: .normal)
         button4.setTitle("VIP", for: .normal)
+        
+        firstRowButton = FirstRowButtonType.Guest
     }
     
     
@@ -89,18 +102,24 @@ class ViewController: UIViewController {
         button2.setTitle("Ride Service", for: .normal)
         button3.setTitle("Maintenance", for: .normal)
         button4.setTitle("Contract", for: .normal)
+        
+        firstRowButton = FirstRowButtonType.Employee
     }
     
     
     @IBAction func managerActivated(_ sender: UIButton) {
         hideButtons()
         enableAllTextField()
+        
+        firstRowButton = FirstRowButtonType.Manager
     }
     
     
     @IBAction func vendorActivated(_ sender: UIButton) {
         hideButtons()
         enableAllTextField()
+        
+        firstRowButton = FirstRowButtonType.Vendor
     }
     
     
@@ -109,11 +128,12 @@ class ViewController: UIViewController {
         if sender.currentTitle == "Child" {
             disableAllTextFields()
             enableTextField(textField: dateOfBirth)
+            secondRowButton = SecondRowButtonType.Child
         }
         
         if sender.currentTitle == "Food Service" {
             enableAllTextField()
-            
+            secondRowButton = SecondRowButtonType.FoodService
         }
     }
     
@@ -122,10 +142,12 @@ class ViewController: UIViewController {
     @IBAction func button2Activated(_ sender: UIButton) {
         if sender.currentTitle == "Adult" {
             disableAllTextFields()
+            secondRowButton = SecondRowButtonType.Adult
         }
         
         if sender.currentTitle == "Ride Service" {
             enableAllTextField()
+            secondRowButton = SecondRowButtonType.RideService
         }
     }
     
@@ -135,10 +157,12 @@ class ViewController: UIViewController {
         if sender.currentTitle == "Senior" {
             disableAllTextFields()
             enableTextField(textField: dateOfBirth)
+            secondRowButton = SecondRowButtonType.Senior
         }
         
         if sender.currentTitle == "Maintenance" {
             enableAllTextField()
+            secondRowButton = SecondRowButtonType.Maintenance
         }
     }
     
@@ -146,26 +170,54 @@ class ViewController: UIViewController {
    
     @IBAction func button4Activated(_ sender: UIButton) {
         if sender.currentTitle == "VIP" {
-             disableAllTextFields()
+            disableAllTextFields()
+            secondRowButton = SecondRowButtonType.VIP
         }
         
         if sender.currentTitle == "Contract" {
             enableAllTextField()
+            secondRowButton = SecondRowButtonType.Contract
         }
     }
     
     
-    @IBAction func generatePass(_ sender: UIButton) {
-        // How do I know which of the buttons are activated from the first row and second row ?
+    
+    @IBAction func specialDateTextFieldClick(_ sender: UITextField) {
+        let datePickerView:UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        dateOfBirth.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(ViewController.datePickerFromValueChanged), for: UIControlEvents.valueChanged)
+    }
+    
+    @objc func datePickerFromValueChanged(sender:UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateOfBirth.text = dateFormatter.string(from: sender.date)
         
-        /* Assuming I want to initialize FoodServiceEmployee
-         How to relate to the top buttons
+    }
+    
+    
+    
+    
+    @IBAction func generatePass(_ sender: UIButton) {
+    
+        guard let firstRowButtonUnwrapped = firstRowButton else {
+            print("Empty")
+            return
+        }
+        /*
+        switch firstRowButtonUnwrapped {
+        case .Guest:
+            if secondRowButton == SecondRowButtonType.Child {
+                
+            }
+        }
          do {
          let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
          } catch {
          print("Error: \(error)")
          }
-         */
+        */
     }
     
     

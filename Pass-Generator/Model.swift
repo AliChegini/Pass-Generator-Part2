@@ -47,6 +47,31 @@ enum EntrantType: String {
     case Manager
 }
 
+
+
+// Enum for top buttons in first row
+enum FirstRowButtonType {
+    case Guest
+    case Employee
+    case Manager
+    case Vendor
+}
+
+
+// Enum for top buttons in second row
+enum SecondRowButtonType {
+    case Child
+    case Adult
+    case Senior
+    case VIP
+    case FoodService
+    case RideService
+    case Maintenance
+    case Contract
+}
+
+
+
 // Protocol for Staff info
 protocol StaffInfo {
     var firstName: String? { get set }
