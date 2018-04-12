@@ -37,6 +37,7 @@ class Guest: Entrant {
     
 }
 
+// Used for Adult and Senior
 class ClassicGuest: Guest {
     override init(firstName: String? = nil, lastName: String? = nil, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: String? = nil, entrantType: EntrantType = .ClassicGuest, dateOfBirth: Date? = nil, discountOnFood: Int?  = nil, discountOnMerchandise: Int? = nil) {
         super.init(entrantType: entrantType)
@@ -45,7 +46,6 @@ class ClassicGuest: Guest {
 
 
 class VIPGuest: Guest {
-
     override init(firstName: String? = nil, lastName: String? = nil, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: String? = nil, entrantType: EntrantType = .VIPGuest, dateOfBirth: Date? = nil, discountOnFood: Int? = nil, discountOnMerchandise: Int? = nil) {
         super.init(entrantType: entrantType)
         self.rideAccess = [.accessAllRides, .skipAllRides]
@@ -74,7 +74,25 @@ class ChildGuest: Guest {
                 throw InitializerError.olderThanAgeLimit
             }
         }
-        
     }
 }
 
+
+class SeasonPassGuest: Guest {
+     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .SeasonPassGuest) throws {
+         super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType)
+        self.discountOnFood = 10
+        self.discountOnMerchandise = 20
+        self.rideAccess = [.accessAllRides, .skipAllRides]
+    }
+}
+
+
+class SeniorGuest: Guest {
+    init(firstName: String?, lastName: String?, entrantType: EntrantType = .SeniorGuest, dateOfBirth: Date?) throws {
+        super.init(firstName: firstName, lastName: lastName, entrantType: entrantType, dateOfBirth: dateOfBirth)
+        self.discountOnFood = 10
+        self.discountOnMerchandise = 10
+        self.rideAccess = [.accessAllRides, .skipAllRides]
+    }
+}

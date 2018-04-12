@@ -41,6 +41,8 @@ enum EntrantType: String {
     case ClassicGuest
     case VIPGuest
     case ChildGuest
+    case SeasonPassGuest
+    case SeniorGuest
     case FoodServiceEmployee
     case RideServiceEmployee
     case MaintenanceEmployee

@@ -97,3 +97,8 @@ class Manager: Employee {
     }
 }
 
+
+class ContractEmployee: Employee {
+    //var projectNumber: Int
+}
+
