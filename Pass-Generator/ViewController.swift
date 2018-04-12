@@ -35,6 +35,8 @@ class ViewController: UIViewController {
     var firstRowButton: FirstRowButtonType? = nil
     var secondRowButton: SecondRowButtonType? = nil
     
+    var pass: Pass? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -183,17 +185,17 @@ class ViewController: UIViewController {
     
     
     @IBAction func specialDateTextFieldClick(_ sender: UITextField) {
-        let datePickerView:UIDatePicker = UIDatePicker()
+        let datePickerView: UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.date
         dateOfBirth.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(ViewController.datePickerFromValueChanged), for: UIControlEvents.valueChanged)
     }
     
+    
     @objc func datePickerFromValueChanged(sender:UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         dateOfBirth.text = dateFormatter.string(from: sender.date)
-        
     }
     
     
@@ -205,19 +207,88 @@ class ViewController: UIViewController {
             print("Empty")
             return
         }
-        /*
+        
         switch firstRowButtonUnwrapped {
         case .Guest:
+            // There are 4 options as Guest
+            //Child
             if secondRowButton == SecondRowButtonType.Child {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MM-yyyy"
+                if let dateOfBirthUnwrapped = dateOfBirth.text {
+                    let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
+                    do {
+                        let child = try ChildGuest(dateOfBirth: dateFromString)
+                        pass = CheckPoint.generatePass(entrant: child)
+                        print(pass!)
+                    } catch {
+                        print("Error: \(error)")
+                    }
+                }
+            }
+            
+            // Adult
+            if secondRowButton == SecondRowButtonType.Adult {
+                let adult = ClassicGuest()
+                pass = CheckPoint.generatePass(entrant: adult)
+            }
+            
+            // Senior
+            if secondRowButton == SecondRowButtonType.Senior {
                 
             }
+            
+            // VIP
+            if secondRowButton == SecondRowButtonType.VIP {
+                let vip = VIPGuest()
+                pass = CheckPoint.generatePass(entrant: vip)
+            }
+            
+        case .Employee:
+            if secondRowButton == SecondRowButtonType.FoodService {
+                do {
+                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    
+                    pass = CheckPoint.generatePass(entrant: foodServiceEmployee)
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            
+            if secondRowButton == SecondRowButtonType.RideService {
+                do {
+                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    
+                    pass = CheckPoint.generatePass(entrant: rideServiceEmployee)
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            
+            if secondRowButton == SecondRowButtonType.Maintenance {
+                do {
+                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    
+                    pass = CheckPoint.generatePass(entrant: maintenanceEmployee)
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
+            
+        case .Manager:
+            do {
+                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                
+                pass = CheckPoint.generatePass(entrant: manager)
+                print(pass)
+            } catch {
+                print("Error: \(error)")
+            }
+            
+        case .Vendor:
+            print("Will be implemented later")
+            
         }
-         do {
-         let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
-         } catch {
-         print("Error: \(error)")
-         }
-        */
     }
     
     

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Extension to ease date picking for the user
 extension UIToolbar {
     
     func ToolbarPiker(mySelect : Selector) -> UIToolbar {
