@@ -106,7 +106,26 @@ class Manager: Employee {
 
 class ContractEmployee: Employee {
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType, projectNumber: Int?) throws {
-        // call super.init the right way ...
+        try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: nil, projectNumber: projectNumber)
+        guard let projectNumberUnwrapped = projectNumber else {
+            throw InitializerError.missingProjectNumber
+        }
+        
+        switch projectNumberUnwrapped {
+        case 1001:
+            self.areaAccess = [.amusementAreas, .rideControlAreas]
+        case 1002:
+            self.areaAccess = [.amusementAreas, .rideControlAreas, .maintenanceAreas]
+        case 1003:
+            self.areaAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas, .maintenanceAreas, .officeAreas]
+        case 2001:
+            self.areaAccess = [.officeAreas]
+        case 2002:
+            self.areaAccess = [.kitchenAreas, .maintenanceAreas]
+        default:
+            print("Project number is not valid!")
+        }
     }
+    
 }
 

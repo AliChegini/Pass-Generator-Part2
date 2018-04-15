@@ -36,6 +36,8 @@ enum InitializerError: Error {
     case missingZipCode
     case olderThanAgeLimit
     case missingProjectNumber
+    case missingVendorCompany
+    case missingDateOfVisit
 }
 
 enum EntrantType: String {
@@ -49,6 +51,7 @@ enum EntrantType: String {
     case MaintenanceEmployee
     case ContractEmployee
     case Manager
+    case Vendor
 }
 
 
