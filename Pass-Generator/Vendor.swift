@@ -17,15 +17,15 @@ class Vendor: Entrant {
     var zipCode: String? = nil
     var entrantType: EntrantType
     var areaAccess: [AreaAccess] = []
-    var rideAccess: [RideAccess] = [.accessAllRides]
+    var rideAccess: [RideAccess] = []
     var dateOfBirth: Date?
     var discountOnFood: Int? = nil
     var discountOnMerchandise: Int? = nil
-    var projectNumber: Int? = nil
-    var vendorCompany: String?
+    var projectNumber: Int?
+    var vendorCompany: VendorCompany?
     var dateOfVisit: Date?
     
-    init(firstName: String?, lastName: String?, entrantType: EntrantType = .Vendor, vendorCompany: String?, dateOfBirth: Date?, dateOfVisit: Date?) throws {
+    init(firstName: String?, lastName: String?, entrantType: EntrantType = .Vendor, vendorCompany: VendorCompany?, dateOfBirth: Date?, dateOfVisit: Date?) throws {
         
         guard let firstNameUnwrapped = firstName else {
             throw InitializerError.missingFirstName
@@ -54,6 +54,18 @@ class Vendor: Entrant {
         self.vendorCompany = vendorCompanyUnwrapped
         self.dateOfBirth = dateOfBirthUnwrapped
         self.dateOfVisit = dateOfVisitUnwrapped
+        
+        
+        switch vendorCompanyUnwrapped {
+        case .Acme:
+            self.areaAccess = [.kitchenAreas]
+        case .Orkin:
+            self.areaAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas]
+        case .Fedex:
+            self.areaAccess = [.maintenanceAreas, .officeAreas]
+        case .NWElectrical:
+            self.areaAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas, .maintenanceAreas, .officeAreas]
+        }
         
     }
     

@@ -38,6 +38,7 @@ enum InitializerError: Error {
     case missingProjectNumber
     case missingVendorCompany
     case missingDateOfVisit
+    case invalidProjectNumber
 }
 
 enum EntrantType: String {
@@ -54,6 +55,13 @@ enum EntrantType: String {
     case Vendor
 }
 
+
+enum VendorCompany: String {
+    case Acme
+    case Orkin
+    case Fedex
+    case NWElectrical
+}
 
 
 // Enum for top buttons in first row
@@ -78,7 +86,6 @@ enum SecondRowButtonType {
 }
 
 
-
 // Protocol for Staff info
 protocol StaffInfo {
     var firstName: String? { get set }
@@ -89,15 +96,31 @@ protocol StaffInfo {
     var zipCode: String? { get set }
 }
 
+
+protocol ContractInfo {
+    var projectNumber: Int? { get set }
+}
+
+
+protocol VendorInfo {
+    var vendorCompany: VendorCompany? { get set }
+    var dateOfVisit: Date? { get set }
+}
+
+
+protocol DiscountInfo {
+    var discountOnFood: Int? { get set }
+    var discountOnMerchandise: Int? { get set }
+}
+
+
 // Protocol to make a custom type Entrant
-// Entrant is a protocol which requires all the properties
-protocol Entrant: StaffInfo {
+// Entrant is a protocol which requires all the common properties
+protocol Entrant: StaffInfo, ContractInfo, VendorInfo, DiscountInfo {
     var areaAccess: [AreaAccess] { get set }
     var rideAccess: [RideAccess] { get set }
     var entrantType: EntrantType { get set }
     var dateOfBirth: Date? { get set }
-    var discountOnFood: Int? { get set }
-    var discountOnMerchandise: Int? { get set }
 }
 
 
@@ -121,8 +144,12 @@ struct Pass: Entrant, SwipeTime {
     var discountOnFood: Int?
     var discountOnMerchandise: Int?
     var swipeTime: Date? = nil
+    var projectNumber: Int?
+    var vendorCompany: VendorCompany?
+    var dateOfVisit: Date?
     
-    init(firstName: String? = nil, lastName: String? = nil, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: String? = nil, entrantType: EntrantType, dateOfBirth: Date? = nil, discountOnFood: Int? = nil, discountOnMerchandise: Int? = nil) {
+    
+    init(firstName: String? = nil, lastName: String? = nil, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: String? = nil, entrantType: EntrantType, dateOfBirth: Date? = nil, discountOnFood: Int? = nil, discountOnMerchandise: Int? = nil, projectNumber: Int? = nil, vendorCompany: VendorCompany? = nil, dateOfVisit: Date? = nil) {
         self.firstName = firstName
         self.lastName = lastName
         self.streetAddress = streetAddress
@@ -133,6 +160,9 @@ struct Pass: Entrant, SwipeTime {
         self.dateOfBirth = dateOfBirth
         self.discountOnFood = discountOnFood
         self.discountOnMerchandise = discountOnMerchandise
+        self.projectNumber = projectNumber
+        self.vendorCompany = vendorCompany
+        self.dateOfVisit = dateOfVisit
     }
 }
 
