@@ -53,8 +53,8 @@ class Employee: Entrant {
             throw InitializerError.missingZipCode
         }
         
-        // DateOfBirth is not mandatory for employees, so we don't halt
-        //  the program execution if date is missing
+        // DateOfBirth is not mandatory for employees, so
+        // we don't halt the program execution if date is missing
         if let dateOfBirthUnwrapped = dateOfBirth {
             self.dateOfBirth = dateOfBirthUnwrapped
         }
@@ -108,7 +108,7 @@ class Manager: Employee {
 
 
 class ContractEmployee: Employee {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType, projectNumber: Int?, dateOfBirth: Date? = nil) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .ContractEmployee, projectNumber: Int?, dateOfBirth: Date? = nil) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth, projectNumber: projectNumber)
         
         guard let projectNumberUnwrapped = projectNumber else {

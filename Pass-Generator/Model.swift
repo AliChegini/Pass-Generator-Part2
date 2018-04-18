@@ -19,7 +19,7 @@ enum AreaAccess: String {
 }
 
 
-enum RideAccess {
+enum RideAccess: String {
     case accessAllRides
     case skipAllRides
 }

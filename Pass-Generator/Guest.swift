@@ -25,32 +25,49 @@ class Guest: Entrant {
     var vendorCompany: VendorCompany?
     var dateOfVisit: Date?
     
-    
-    // TODO:
-    // Optionals have to be unwrapped first, what I have is not a correct init
-    // Some guests can't have names and etc, some can: SeasonPassGuest and senior
     init(firstName: String? = nil, lastName: String? = nil, streetAddress: String? = nil, city: String? = nil, state: String? = nil, zipCode: String? = nil, entrantType: EntrantType, dateOfBirth: Date? = nil, discountOnFood: Int? = nil, discountOnMerchandise: Int? = nil) {
-        self.firstName = firstName
-        self.lastName = lastName
-        self.streetAddress = streetAddress
-        self.city = city
-        self.state = state
-        self.zipCode = zipCode
+        
+        if let firstNameUnwrapped = firstName {
+            self.firstName = firstNameUnwrapped
+        }
+        
+        if let lastNameUnwrapped = lastName {
+            self.lastName = lastNameUnwrapped
+        }
+        
+        if let streetAddressUnwrapped = streetAddress {
+            self.streetAddress = streetAddressUnwrapped
+        }
+        
+        if let cityUnwrapped = city {
+            self.city = cityUnwrapped
+        }
+        
+        if let stateUnwrapped = state {
+            self.state = stateUnwrapped
+        }
+        
+        if let zipCodeUnwrapped = zipCode {
+            self.zipCode = zipCodeUnwrapped
+        }
+        
+        if let dateOfBirthUnwrapped = dateOfBirth {
+            self.dateOfBirth = dateOfBirthUnwrapped
+        }
+        
         self.entrantType = entrantType
-        self.dateOfBirth = dateOfBirth
         self.discountOnFood = discountOnFood
         self.discountOnMerchandise = discountOnMerchandise
     }
     
 }
 
-// Used for Adult and Senior
+
 class ClassicGuest: Guest {
     init(entrantType: EntrantType = .ClassicGuest, dateOfBirth: Date? = nil) {
         super.init(entrantType: entrantType, dateOfBirth: dateOfBirth)
     }
 }
-
 
 
 class VIPGuest: Guest {
@@ -59,7 +76,6 @@ class VIPGuest: Guest {
         self.rideAccess = [.accessAllRides, .skipAllRides]
     }
 }
-
 
 
 class ChildGuest: Guest {

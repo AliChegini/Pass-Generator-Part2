@@ -210,7 +210,7 @@ class ViewController: UIViewController {
         
         switch firstRowButtonUnwrapped {
         case .Guest:
-            // There are 4 options as Guest
+            // There are 4 options for Guests
             //Child
             if secondRowButton == SecondRowButtonType.Child {
                 let dateFormatter = DateFormatter()
@@ -220,7 +220,6 @@ class ViewController: UIViewController {
                     do {
                         let child = try ChildGuest(dateOfBirth: dateFromString)
                         pass = CheckPoint.generatePass(entrant: child)
-                        print(pass!)
                     } catch {
                         print("Error: \(error)")
                     }
@@ -235,7 +234,17 @@ class ViewController: UIViewController {
             
             // Senior
             if secondRowButton == SecondRowButtonType.Senior {
-                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MM-yyyy"
+                if let dateOfBirthUnwrapped = dateOfBirth.text {
+                    let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
+                    do {
+                        let senior = try SeniorGuest(firstName: firstName.text, lastName: lastName.text, dateOfBirth: dateFromString)
+                        pass = CheckPoint.generatePass(entrant: senior)
+                    } catch {
+                        print("Error: \(error)")
+                    }
+                }
             }
             
             // VIP
@@ -245,6 +254,8 @@ class ViewController: UIViewController {
             }
             
         case .Employee:
+            // There are 4 options for employees
+            // FoodServiceEmployee
             if secondRowButton == SecondRowButtonType.FoodService {
                 do {
                     let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
@@ -255,6 +266,7 @@ class ViewController: UIViewController {
                 }
             }
             
+            // RideServiceEmployee
             if secondRowButton == SecondRowButtonType.RideService {
                 do {
                     let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
@@ -265,6 +277,7 @@ class ViewController: UIViewController {
                 }
             }
             
+            // MaintenanceEmployee
             if secondRowButton == SecondRowButtonType.Maintenance {
                 do {
                     let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
@@ -275,22 +288,35 @@ class ViewController: UIViewController {
                 }
             }
             
+            // ContractEmployee
+            if secondRowButton == SecondRowButtonType.Contract {
+                if let projectNumberUnwrapped = project.text {
+                    do {
+                        let contractEmployee = try ContractEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, projectNumber: Int(projectNumberUnwrapped))
+                        
+                        pass = CheckPoint.generatePass(entrant: contractEmployee)
+                    } catch {
+                        print("Error: \(error)")
+                    }
+                }
+            }
+            
         case .Manager:
             do {
                 let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
                 
                 pass = CheckPoint.generatePass(entrant: manager)
-                print(pass)
             } catch {
                 print("Error: \(error)")
             }
             
         case .Vendor:
+            // TODO: Vendor should be implemented and then move on with UI for create pass view
             print("Will be implemented later")
             
         }
+        
     }
-    
     
     
     
