@@ -16,7 +16,7 @@ class Vendor: Entrant {
     var state: String? = nil
     var zipCode: String? = nil
     var entrantType: EntrantType
-    var areaAccess: [AreaAccess] = []
+    var areaAccess: [AreaAccess] = [.amusementAreas, .kitchenAreas]
     var rideAccess: [RideAccess] = []
     var dateOfBirth: Date?
     var discountOnFood: Int? = nil

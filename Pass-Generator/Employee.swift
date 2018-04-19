@@ -59,7 +59,6 @@ class Employee: Entrant {
             self.dateOfBirth = dateOfBirthUnwrapped
         }
         
-        
        
         self.firstName = firstNameUnwrapped
         self.lastName = lastNameUnwrapped
@@ -110,6 +109,7 @@ class Manager: Employee {
 class ContractEmployee: Employee {
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .ContractEmployee, projectNumber: Int?, dateOfBirth: Date? = nil) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth, projectNumber: projectNumber)
+        self.areaAccess = [.amusementAreas, .kitchenAreas]
         
         guard let projectNumberUnwrapped = projectNumber else {
             throw InitializerError.missingProjectNumber
@@ -117,15 +117,15 @@ class ContractEmployee: Employee {
         
         switch projectNumberUnwrapped {
         case 1001:
-            self.areaAccess = [.amusementAreas, .rideControlAreas]
+            self.rideAccess = [.amusementAreas, .rideControlAreas]
         case 1002:
-            self.areaAccess = [.amusementAreas, .rideControlAreas, .maintenanceAreas]
+            self.rideAccess = [.amusementAreas, .rideControlAreas, .maintenanceAreas]
         case 1003:
-            self.areaAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas, .maintenanceAreas, .officeAreas]
+            self.rideAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas, .maintenanceAreas, .officeAreas]
         case 2001:
-            self.areaAccess = [.officeAreas]
+            self.rideAccess = [.officeAreas]
         case 2002:
-            self.areaAccess = [.kitchenAreas, .maintenanceAreas]
+            self.rideAccess = [.kitchenAreas, .maintenanceAreas]
         default:
             throw InitializerError.invalidProjectNumber
         }

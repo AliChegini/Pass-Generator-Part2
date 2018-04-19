@@ -73,7 +73,7 @@ class ClassicGuest: Guest {
 class VIPGuest: Guest {
     init(entrantType: EntrantType = .VIPGuest, discountOnFood: Int? = 10, discountOnMerchandise: Int? = 20, dateOfBirth: Date? = nil) {
         super.init(entrantType: entrantType, dateOfBirth: dateOfBirth)
-        self.rideAccess = [.accessAllRides, .skipAllRides]
+        self.rideAccess = [.accessAllRides, .skipAllLines]
     }
 }
 
@@ -106,7 +106,7 @@ class ChildGuest: Guest {
 class SeasonPassGuest: Guest {
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .SeasonPassGuest, discountOnFood: Int? = 10, discountOnMerchandise: Int? = 20, dateOfBirth: Date? = nil) throws {
          super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth)
-        self.rideAccess = [.accessAllRides, .skipAllRides]
+        self.rideAccess = [.accessAllRides, .skipAllLines]
     }
 }
 
@@ -114,6 +114,6 @@ class SeasonPassGuest: Guest {
 class SeniorGuest: Guest {
     init(firstName: String?, lastName: String?, entrantType: EntrantType = .SeniorGuest, dateOfBirth: Date?, discountOnFood: Int? = 10, discountOnMerchandise: Int? = 10) throws {
         super.init(firstName: firstName, lastName: lastName, entrantType: entrantType, dateOfBirth: dateOfBirth)
-        self.rideAccess = [.accessAllRides, .skipAllRides]
+        self.rideAccess = [.accessAllRides, .skipAllLines]
     }
 }

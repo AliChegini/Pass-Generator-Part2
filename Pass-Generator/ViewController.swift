@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    let companyData: [String] = [VendorCompany.Acme.rawValue, VendorCompany.Fedex.rawValue, VendorCompany.NWElectrical.rawValue, VendorCompany.Orkin.rawValue]
     
     @IBOutlet weak var guestButon: UIButton!
     @IBOutlet weak var employeeButton: UIButton!
@@ -49,10 +50,18 @@ class ViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        
+        // toolbar to be used for different picker
         let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
         
         dateOfBirth.inputAccessoryView = toolBar
+        
+        // Company picker
+        let companyPicker = UIPickerView()
+        company.inputView = companyPicker
+        companyPicker.delegate = self
+        company.inputAccessoryView = toolBar
+        
+        
         
     }
 
@@ -183,7 +192,7 @@ class ViewController: UIViewController {
     }
     
     
-    
+    // Date picker
     @IBAction func specialDateTextFieldClick(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.date
@@ -198,6 +207,23 @@ class ViewController: UIViewController {
         dateOfBirth.text = dateFormatter.string(from: sender.date)
     }
     
+    
+    // helper functions for company picker
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return companyData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return companyData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        company.text = companyData[row]
+    }
     
     
     
@@ -221,7 +247,7 @@ class ViewController: UIViewController {
                         let child = try ChildGuest(dateOfBirth: dateFromString)
                         pass = CheckPoint.generatePass(entrant: child)
                     } catch {
-                        print("Error: \(error)")
+                        genericAlert(error: error)
                     }
                 }
             }
@@ -242,7 +268,7 @@ class ViewController: UIViewController {
                         let senior = try SeniorGuest(firstName: firstName.text, lastName: lastName.text, dateOfBirth: dateFromString)
                         pass = CheckPoint.generatePass(entrant: senior)
                     } catch {
-                        print("Error: \(error)")
+                        genericAlert(error: error)
                     }
                 }
             }
@@ -262,7 +288,7 @@ class ViewController: UIViewController {
                     
                     pass = CheckPoint.generatePass(entrant: foodServiceEmployee)
                 } catch {
-                    print("Error: \(error)")
+                    genericAlert(error: error)
                 }
             }
             
@@ -273,7 +299,7 @@ class ViewController: UIViewController {
                     
                     pass = CheckPoint.generatePass(entrant: rideServiceEmployee)
                 } catch {
-                    print("Error: \(error)")
+                    genericAlert(error: error)
                 }
             }
             
@@ -284,7 +310,7 @@ class ViewController: UIViewController {
                     
                     pass = CheckPoint.generatePass(entrant: maintenanceEmployee)
                 } catch {
-                    print("Error: \(error)")
+                    genericAlert(error: error)
                 }
             }
             
@@ -296,7 +322,7 @@ class ViewController: UIViewController {
                         
                         pass = CheckPoint.generatePass(entrant: contractEmployee)
                     } catch {
-                        print("Error: \(error)")
+                        genericAlert(error: error)
                     }
                 }
             }
@@ -307,12 +333,16 @@ class ViewController: UIViewController {
                 
                 pass = CheckPoint.generatePass(entrant: manager)
             } catch {
-                print("Error: \(error)")
+                genericAlert(error: error)
             }
             
         case .Vendor:
-            // TODO: Vendor should be implemented and then move on with UI for create pass view
-            print("Will be implemented later")
+            do {
+                // Needs to be implemented after solving the dateOFVisit issue
+                //let vendor = try Vendor(firstName: firstName.text, lastName: lastName.text, vendorCompany: company.text, dateOfBirth: dateOfBirth.text, dateOfVisit: )
+            } catch {
+                genericAlert(error: error)
+            }
             
         }
         
@@ -369,15 +399,22 @@ class ViewController: UIViewController {
     func disableTextField(textField: UITextField){
         textField.isEnabled = false
         textField.backgroundColor = UIColor.lightGray
+        textField.text = ""
     }
     
     
     func enableTextField(textField: UITextField) {
         textField.isEnabled = true
         textField.backgroundColor = UIColor.white
+        textField.text = ""
     }
     
-    
+    // Generic function to show error messages to user
+    func genericAlert<T>(error: T) {
+        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
 
 }
 
