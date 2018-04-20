@@ -22,7 +22,7 @@ enum AreaAccess: String {
 enum RideAccess: String {
     case accessAllRides
     case skipAllLines
-    // For ContractEmployees and Vendors
+    // boken down allRides for ContractEmployees and Vendors
     case amusementAreas
     case kitchenAreas
     case rideControlAreas

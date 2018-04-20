@@ -10,8 +10,6 @@ import UIKit
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    let companyData: [String] = [VendorCompany.Acme.rawValue, VendorCompany.Fedex.rawValue, VendorCompany.NWElectrical.rawValue, VendorCompany.Orkin.rawValue]
-    
     @IBOutlet weak var guestButon: UIButton!
     @IBOutlet weak var employeeButton: UIButton!
     @IBOutlet weak var managerButton: UIButton!
@@ -38,6 +36,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var pass: Pass? = nil
     
+    let companyData: [String] = [VendorCompany.Acme.rawValue, VendorCompany.Fedex.rawValue, VendorCompany.NWElectrical.rawValue, VendorCompany.Orkin.rawValue]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -47,28 +47,34 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         hideButtons()
         
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        // toolbar to be used for different picker
+        // toolbar
         let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
         
-        dateOfBirth.inputAccessoryView = toolBar
+        // adding Done button for all the input fields (Keyboard, UIPicker)
+        //firstName.inputAccessoryView = toolBar
+        //lastName.inputAccessoryView = toolBar
+        
+        
+        //dateOfBirth.inputAccessoryView = toolBar
         
         // Company picker
         let companyPicker = UIPickerView()
         company.inputView = companyPicker
         companyPicker.delegate = self
-        company.inputAccessoryView = toolBar
+        //company.inputAccessoryView = toolBar
         
-        
-        
+        self.hideKeyboardWhenTappedAround()
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            // I beleive the problem is originated here since after working with the keyboard multiple times we will hit the else branch! I don't know why!
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height/2
+            } else {
+                print("This is the bug --- Will Show")
             }
         }
     }
@@ -78,6 +84,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y += keyboardSize.height/2
+            } else {
+                print("This is the bug --- Will Hide")
             }
         }
     }
@@ -201,12 +209,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     
-    @objc func datePickerFromValueChanged(sender:UIDatePicker) {
+    @objc func datePickerFromValueChanged(sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         dateOfBirth.text = dateFormatter.string(from: sender.date)
     }
-    
+    //////////////////////////
     
     // helper functions for company picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -224,7 +232,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         company.text = companyData[row]
     }
-    
+    ///////////////////////////
     
     
     @IBAction func generatePass(_ sender: UIButton) {
