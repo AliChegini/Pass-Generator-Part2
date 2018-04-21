@@ -21,7 +21,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var button4: UIButton!
     
     @IBOutlet weak var dateOfBirth: UITextField!
-    @IBOutlet weak var ssn: UITextField!
+    @IBOutlet weak var dateOfVisit: UITextField!
     @IBOutlet weak var project: UITextField!
     @IBOutlet weak var firstName: UITextField!
     @IBOutlet weak var lastName: UITextField!
@@ -53,40 +53,44 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
         
         // adding Done button for all the input fields (Keyboard, UIPicker)
-        //firstName.inputAccessoryView = toolBar
-        //lastName.inputAccessoryView = toolBar
+        
+        dateOfBirth.inputAccessoryView = toolBar
+        dateOfVisit.inputAccessoryView = toolBar
+        project.inputAccessoryView = toolBar
+        firstName.inputAccessoryView = toolBar
+        lastName.inputAccessoryView = toolBar
+        company.inputAccessoryView = toolBar
+        streetAddress.inputAccessoryView = toolBar
+        city.inputAccessoryView = toolBar
+        state.inputAccessoryView = toolBar
+        zipCode.inputAccessoryView = toolBar
         
         
-        //dateOfBirth.inputAccessoryView = toolBar
+        
         
         // Company picker
         let companyPicker = UIPickerView()
         company.inputView = companyPicker
         companyPicker.delegate = self
-        //company.inputAccessoryView = toolBar
+        company.inputAccessoryView = toolBar
         
         self.hideKeyboardWhenTappedAround()
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            // I beleive the problem is originated here since after working with the keyboard multiple times we will hit the else branch! I don't know why!
+            // Move the view up, so keyboard have space
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height/2
-            } else {
-                print("This is the bug --- Will Show")
             }
         }
     }
     
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height/2
-            } else {
-                print("This is the bug --- Will Hide")
-            }
+        // reset the view y origin if it has been moved
+        if self.view.frame.origin.y < 0 {
+            self.view.frame.origin.y = 0
         }
     }
     
@@ -200,23 +204,37 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     
-    // Date picker
-    @IBAction func specialDateTextFieldClick(_ sender: UITextField) {
+    // Date pickers -----------------
+    @IBAction func dateOfBirthPicker(_ sender: UITextField) {
         let datePickerView: UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.date
         dateOfBirth.inputView = datePickerView
-        datePickerView.addTarget(self, action: #selector(ViewController.datePickerFromValueChanged), for: UIControlEvents.valueChanged)
+        datePickerView.addTarget(self, action: #selector(ViewController.updateDateOfBirthFromValueChanged), for: UIControlEvents.valueChanged)
     }
     
-    
-    @objc func datePickerFromValueChanged(sender: UIDatePicker) {
+    @objc func updateDateOfBirthFromValueChanged(sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         dateOfBirth.text = dateFormatter.string(from: sender.date)
     }
-    //////////////////////////
     
-    // helper functions for company picker
+    
+    @IBAction func dateOfVisitPicker(_ sender: UITextField) {
+        let datePickerView: UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        dateOfVisit.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(ViewController.updateDateOfVisitFromValueChanged), for: UIControlEvents.valueChanged)
+    }
+    
+    @objc func updateDateOfVisitFromValueChanged(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateOfVisit.text = dateFormatter.string(from: sender.date)
+    }
+    //----------------------------
+    
+    
+    // helper functions for company picker ----------
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -232,7 +250,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         company.text = companyData[row]
     }
-    ///////////////////////////
+    //-------------------------------------------------
     
     
     @IBAction func generatePass(_ sender: UIButton) {
@@ -345,11 +363,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         case .Vendor:
-            do {
-                // Needs to be implemented after solving the dateOFVisit issue
-                //let vendor = try Vendor(firstName: firstName.text, lastName: lastName.text, vendorCompany: company.text, dateOfBirth: dateOfBirth.text, dateOfVisit: )
-            } catch {
-                genericAlert(error: error)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yyyy"
+            
+            if let vendorCompanyUnwrapped = company.text, let dateOfBirthUnwrapped = dateOfBirth.text, let dateOfVisitUnwrapped = dateOfVisit.text {
+                let dateOfBirthFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
+                let dateOfVisitFromString: Date? = dateFormatter.date(from: dateOfVisitUnwrapped)
+                do {
+                    let vendor = try Vendor(firstName: firstName.text, lastName: lastName.text, vendorCompany: VendorCompany(rawValue: vendorCompanyUnwrapped), dateOfBirth: dateOfBirthFromString, dateOfVisit: dateOfVisitFromString)
+                    
+                    pass = CheckPoint.generatePass(entrant: vendor)
+                } catch {
+                    genericAlert(error: error)
+                }
             }
             
         }
@@ -379,7 +405,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func disableAllTextFields() {
         disableTextField(textField: dateOfBirth)
-        disableTextField(textField: ssn)
+        disableTextField(textField: dateOfVisit)
         disableTextField(textField: project)
         disableTextField(textField: firstName)
         disableTextField(textField: lastName)
@@ -392,7 +418,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func enableAllTextField() {
         enableTextField(textField: dateOfBirth)
-        enableTextField(textField: ssn)
+        enableTextField(textField: dateOfVisit)
         enableTextField(textField: project)
         enableTextField(textField: firstName)
         enableTextField(textField: lastName)

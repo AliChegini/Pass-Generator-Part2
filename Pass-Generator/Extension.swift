@@ -32,7 +32,7 @@ extension UIToolbar {
 }
 
 
-// Extension to dismiss the keyboard
+// Extension to dismiss the keyboard by tapping around
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))

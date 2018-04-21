@@ -161,7 +161,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SSN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wu4-pM-w2n">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date of Visit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wu4-pM-w2n">
                                         <rect key="frame" x="242.5" y="0.0" width="223" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -184,7 +184,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <action selector="specialDateTextFieldClick:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="shn-AF-Tnk"/>
+                                            <action selector="dateOfBirthPicker:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="shn-AF-Tnk"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLy-Ir-xAo">
@@ -192,6 +192,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="dateOfVisitPicker:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="Jby-va-zCh"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QdY-aE-oJm">
                                         <rect key="frame" x="485.5" y="0.0" width="222.5" height="50"/>
@@ -415,13 +418,13 @@
                         <outlet property="city" destination="xS6-pc-7uM" id="7T5-46-o6h"/>
                         <outlet property="company" destination="Xet-DO-3FZ" id="s6S-3U-PPu"/>
                         <outlet property="dateOfBirth" destination="fwa-6k-eZM" id="REP-SN-dAv"/>
+                        <outlet property="dateOfVisit" destination="hLy-Ir-xAo" id="FGj-fX-ITZ"/>
                         <outlet property="employeeButton" destination="6q5-gN-U36" id="AGu-0g-K3O"/>
                         <outlet property="firstName" destination="bsT-5k-ZzP" id="nLe-GB-tti"/>
                         <outlet property="guestButon" destination="sDL-tb-1Ef" id="3wU-NJ-bae"/>
                         <outlet property="lastName" destination="dqJ-7b-AZn" id="dxr-vA-ulS"/>
                         <outlet property="managerButton" destination="dFI-l4-Z9c" id="eYJ-hz-S9M"/>
                         <outlet property="project" destination="QdY-aE-oJm" id="HN1-ea-yyM"/>
-                        <outlet property="ssn" destination="hLy-Ir-xAo" id="FGj-fX-ITZ"/>
                         <outlet property="state" destination="VAk-nG-uMv" id="UQJ-8X-Avo"/>
                         <outlet property="streetAddress" destination="ahH-xq-0qW" id="F4S-0A-s6q"/>
                         <outlet property="vendorButton" destination="VtX-vE-qeh" id="NFg-db-hGW"/>
