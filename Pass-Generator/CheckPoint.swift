@@ -39,6 +39,8 @@ class CheckPoint {
             var pass = Pass(entrantType: vipGuest.entrantType)
             pass.rideAccess = vipGuest.rideAccess
             pass.areaAccess = vipGuest.areaAccess
+            pass.discountOnFood = vipGuest.discountOnFood
+            pass.discountOnMerchandise = vipGuest.discountOnMerchandise
             
             finalPass = pass
             
@@ -62,6 +64,8 @@ class CheckPoint {
                 var pass = Pass(firstName: seasonPassGuest.firstName, lastName: seasonPassGuest.lastName, entrantType: seasonPassGuest.entrantType, dateOfBirth: seasonPassGuest.dateOfBirth, discountOnFood: seasonPassGuest.discountOnFood, discountOnMerchandise: seasonPassGuest.discountOnMerchandise)
                 pass.rideAccess = seasonPassGuest.rideAccess
                 pass.areaAccess = seasonPassGuest.areaAccess
+                pass.discountOnFood = seasonPassGuest.discountOnFood
+                pass.discountOnMerchandise = seasonPassGuest.discountOnMerchandise
                 
                 finalPass = pass
             } catch {
@@ -76,6 +80,8 @@ class CheckPoint {
                 var pass = Pass(firstName: seniorGuest.firstName, lastName: seniorGuest.lastName, entrantType: seniorGuest.entrantType, dateOfBirth: seniorGuest.dateOfBirth)
                 pass.rideAccess = seniorGuest.rideAccess
                 pass.areaAccess = seniorGuest.areaAccess
+                pass.discountOnFood = seniorGuest.discountOnFood
+                pass.discountOnMerchandise = seniorGuest.discountOnMerchandise
                 
                 finalPass = pass
             } catch {
@@ -90,6 +96,8 @@ class CheckPoint {
                 var pass = Pass(firstName: foodServiceEmployee.firstName, lastName: foodServiceEmployee.lastName, entrantType: foodServiceEmployee.entrantType, dateOfBirth: foodServiceEmployee.dateOfBirth)
                 pass.rideAccess = foodServiceEmployee.rideAccess
                 pass.areaAccess = foodServiceEmployee.areaAccess
+                pass.discountOnFood = foodServiceEmployee.discountOnFood
+                pass.discountOnMerchandise = foodServiceEmployee.discountOnMerchandise
                 
                 finalPass = pass
             } catch {
@@ -104,6 +112,8 @@ class CheckPoint {
                 var pass = Pass(firstName: rideServiceEmployee.firstName, lastName: rideServiceEmployee.lastName, entrantType: rideServiceEmployee.entrantType)
                 pass.rideAccess = rideServiceEmployee.rideAccess
                 pass.areaAccess = rideServiceEmployee.areaAccess
+                pass.discountOnFood = rideServiceEmployee.discountOnFood
+                pass.discountOnMerchandise = rideServiceEmployee.discountOnMerchandise
                 
                 finalPass = pass
             } catch {
@@ -118,6 +128,8 @@ class CheckPoint {
                 var pass = Pass(firstName: maintenanceEmployee.firstName, lastName: maintenanceEmployee.lastName, entrantType: maintenanceEmployee.entrantType)
                 pass.rideAccess = maintenanceEmployee.rideAccess
                 pass.areaAccess = maintenanceEmployee.areaAccess
+                pass.discountOnFood = maintenanceEmployee.discountOnFood
+                pass.discountOnMerchandise = maintenanceEmployee.discountOnMerchandise
                 
                 finalPass = pass
             } catch {
@@ -132,6 +144,8 @@ class CheckPoint {
                 var pass = Pass(firstName: manager.firstName, lastName: manager.lastName, entrantType: manager.entrantType)
                 pass.rideAccess = manager.rideAccess
                 pass.areaAccess = manager.areaAccess
+                pass.discountOnFood = manager.discountOnFood
+                pass.discountOnMerchandise = manager.discountOnMerchandise
                 
                 finalPass = pass
             } catch {

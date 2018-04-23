@@ -106,6 +106,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showPass" {
+            let vc = segue.destination as! PageController
+            vc.pass = pass
+        }
+    }
+    
     
     
     @IBAction func guestActivated(_ sender: UIButton) {
@@ -133,6 +140,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func managerActivated(_ sender: UIButton) {
         hideButtons()
         enableAllTextField()
+        disableTextField(textField: dateOfVisit)
+        disableTextField(textField: project)
         
         firstRowButton = FirstRowButtonType.Manager
     }
@@ -141,6 +150,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func vendorActivated(_ sender: UIButton) {
         hideButtons()
         enableAllTextField()
+        disableTextField(textField: project)
         
         firstRowButton = FirstRowButtonType.Vendor
     }
@@ -156,6 +166,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         if sender.currentTitle == "Food Service" {
             enableAllTextField()
+            disableTextField(textField: dateOfVisit)
+            disableTextField(textField: project)
             secondRowButton = SecondRowButtonType.FoodService
         }
     }
@@ -170,6 +182,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         if sender.currentTitle == "Ride Service" {
             enableAllTextField()
+            disableTextField(textField: dateOfVisit)
+            disableTextField(textField: project)
             secondRowButton = SecondRowButtonType.RideService
         }
     }
@@ -185,6 +199,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         if sender.currentTitle == "Maintenance" {
             enableAllTextField()
+            disableTextField(textField: dateOfVisit)
+            disableTextField(textField: project)
             secondRowButton = SecondRowButtonType.Maintenance
         }
     }
@@ -199,6 +215,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         if sender.currentTitle == "Contract" {
             enableAllTextField()
+            disableTextField(textField: dateOfVisit)
+
             secondRowButton = SecondRowButtonType.Contract
         }
     }
