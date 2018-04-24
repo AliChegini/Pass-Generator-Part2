@@ -29,27 +29,27 @@ class Employee: Entrant {
     
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType, dateOfBirth: Date?, projectNumber: Int? = nil) throws {
         
-        guard let firstNameUnwrapped = firstName else {
+        guard let firstNameUnwrapped = firstName.nilIfEmpty else {
             throw InitializerError.missingFirstName
         }
         
-        guard let lastNameUnwrapped = lastName else {
+        guard let lastNameUnwrapped = lastName.nilIfEmpty else {
             throw InitializerError.missingLastName
         }
         
-        guard let streetAddressUnwrapped = streetAddress else {
+        guard let streetAddressUnwrapped = streetAddress.nilIfEmpty else {
             throw InitializerError.missingStreetAddress
         }
         
-        guard let cityUnwrapped = city else {
+        guard let cityUnwrapped = city.nilIfEmpty else {
             throw InitializerError.missingCity
         }
         
-        guard let stateUnwrapped = state else {
+        guard let stateUnwrapped = state.nilIfEmpty else {
             throw InitializerError.missingState
         }
         
-        guard let zipCodeUnwrapped = zipCode else {
+        guard let zipCodeUnwrapped = zipCode.nilIfEmpty else {
             throw InitializerError.missingZipCode
         }
         
@@ -59,7 +59,6 @@ class Employee: Entrant {
             self.dateOfBirth = dateOfBirthUnwrapped
         }
         
-       
         self.firstName = firstNameUnwrapped
         self.lastName = lastNameUnwrapped
         self.streetAddress = streetAddressUnwrapped
@@ -109,7 +108,7 @@ class Manager: Employee {
 class ContractEmployee: Employee {
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .ContractEmployee, projectNumber: Int?, dateOfBirth: Date? = nil) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth, projectNumber: projectNumber)
-        self.areaAccess = [.amusementAreas, .kitchenAreas]
+        self.rideAccess = []
         
         guard let projectNumberUnwrapped = projectNumber else {
             throw InitializerError.missingProjectNumber
@@ -117,15 +116,15 @@ class ContractEmployee: Employee {
         
         switch projectNumberUnwrapped {
         case 1001:
-            self.rideAccess = [.amusementAreas, .rideControlAreas]
+            self.areaAccess = [.amusementAreas, .rideControlAreas]
         case 1002:
-            self.rideAccess = [.amusementAreas, .rideControlAreas, .maintenanceAreas]
+            self.areaAccess = [.amusementAreas, .rideControlAreas, .maintenanceAreas]
         case 1003:
-            self.rideAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas, .maintenanceAreas, .officeAreas]
+            self.areaAccess = [.amusementAreas, .rideControlAreas, .kitchenAreas, .maintenanceAreas, .officeAreas]
         case 2001:
-            self.rideAccess = [.officeAreas]
+            self.areaAccess = [.officeAreas]
         case 2002:
-            self.rideAccess = [.kitchenAreas, .maintenanceAreas]
+            self.areaAccess = [.kitchenAreas, .maintenanceAreas]
         default:
             throw InitializerError.invalidProjectNumber
         }

@@ -71,9 +71,11 @@ class ClassicGuest: Guest {
 
 
 class VIPGuest: Guest {
-    init(entrantType: EntrantType = .VIPGuest, discountOnFood: Int? = 10, discountOnMerchandise: Int? = 20, dateOfBirth: Date? = nil) {
+    init(entrantType: EntrantType = .VIPGuest, dateOfBirth: Date? = nil) {
         super.init(entrantType: entrantType, dateOfBirth: dateOfBirth)
         self.rideAccess = [.accessAllRides, .skipAllLines]
+        self.discountOnFood = 10
+        self.discountOnMerchandise = 20
     }
 }
 
@@ -104,16 +106,57 @@ class ChildGuest: Guest {
 
 
 class SeasonPassGuest: Guest {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .SeasonPassGuest, discountOnFood: Int? = 10, discountOnMerchandise: Int? = 20, dateOfBirth: Date? = nil) throws {
-         super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth)
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .SeasonPassGuest, dateOfBirth: Date? = nil) throws {
+        
+        guard let firstNameUnwrapped = firstName.nilIfEmpty else {
+            throw InitializerError.missingFirstName
+        }
+        
+        guard let lastNameUnwrapped = lastName.nilIfEmpty else {
+            throw InitializerError.missingLastName
+        }
+        
+        guard let streetAddressUnwrapped = streetAddress.nilIfEmpty else {
+            throw InitializerError.missingStreetAddress
+        }
+        
+        guard let cityUnwrapped = city.nilIfEmpty else {
+            throw InitializerError.missingCity
+        }
+        
+        guard let stateUnwrapped = state.nilIfEmpty else {
+            throw InitializerError.missingState
+        }
+        
+        guard let zipCodeUnwrapped = zipCode.nilIfEmpty else {
+            throw InitializerError.missingZipCode
+        }
+        
+        super.init(firstName: firstNameUnwrapped, lastName: lastNameUnwrapped, streetAddress: streetAddressUnwrapped, city: cityUnwrapped, state: stateUnwrapped, zipCode: zipCodeUnwrapped, entrantType: entrantType, dateOfBirth: dateOfBirth)
         self.rideAccess = [.accessAllRides, .skipAllLines]
+        self.discountOnFood = 10
+        self.discountOnMerchandise = 20
     }
 }
 
 
 class SeniorGuest: Guest {
-    init(firstName: String?, lastName: String?, entrantType: EntrantType = .SeniorGuest, dateOfBirth: Date?, discountOnFood: Int? = 10, discountOnMerchandise: Int? = 10) throws {
-        super.init(firstName: firstName, lastName: lastName, entrantType: entrantType, dateOfBirth: dateOfBirth)
+    init(firstName: String?, lastName: String?, entrantType: EntrantType = .SeniorGuest, dateOfBirth: Date?) throws {
+        guard let firstNameUnwrapped = firstName.nilIfEmpty else {
+            throw InitializerError.missingFirstName
+        }
+        
+        guard let lastNameUnwrapped = lastName.nilIfEmpty else {
+            throw InitializerError.missingLastName
+        }
+        
+        guard let dateOfBirthUnwrapped = dateOfBirth else {
+            throw InitializerError.missingDateOfBirth
+        }
+        
+        super.init(firstName: firstNameUnwrapped, lastName: lastNameUnwrapped, entrantType: entrantType, dateOfBirth: dateOfBirthUnwrapped)
         self.rideAccess = [.accessAllRides, .skipAllLines]
+        self.discountOnFood = 10
+        self.discountOnMerchandise = 10
     }
 }

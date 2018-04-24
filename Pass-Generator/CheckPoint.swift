@@ -47,7 +47,7 @@ class CheckPoint {
         case .ChildGuest:
             do {
                 let childGuest = try ChildGuest(dateOfBirth: entrant.dateOfBirth)
-                var pass = Pass(entrantType: childGuest.entrantType, dateOfBirth: entrant.dateOfBirth)
+                var pass = Pass(entrantType: childGuest.entrantType, dateOfBirth: childGuest.dateOfBirth)
                 pass.rideAccess = childGuest.rideAccess
                 pass.areaAccess = childGuest.areaAccess
                 
@@ -123,7 +123,7 @@ class CheckPoint {
         case .MaintenanceEmployee:
             do {
                 // Creating an instance
-                let maintenanceEmployee = try MaintenanceEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: nil)
+                let maintenanceEmployee = try MaintenanceEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
                 var pass = Pass(firstName: maintenanceEmployee.firstName, lastName: maintenanceEmployee.lastName, entrantType: maintenanceEmployee.entrantType)
                 pass.rideAccess = maintenanceEmployee.rideAccess
@@ -139,7 +139,7 @@ class CheckPoint {
         case .Manager:
             do {
                 // Creating an instance
-                let manager = try Manager(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: nil)
+                let manager = try Manager(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
                 var pass = Pass(firstName: manager.firstName, lastName: manager.lastName, entrantType: manager.entrantType)
                 pass.rideAccess = manager.rideAccess
@@ -157,7 +157,7 @@ class CheckPoint {
                 // Creating an instance
                 let contractEmployee = try ContractEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, projectNumber: entrant.projectNumber)
                 // Constructing a pass
-                var pass = Pass(firstName: contractEmployee.firstName, lastName: contractEmployee.lastName, streetAddress: contractEmployee.streetAddress, city: contractEmployee.city, state: contractEmployee.state, zipCode: contractEmployee.zipCode, entrantType: contractEmployee.entrantType, dateOfBirth: nil)
+                var pass = Pass(firstName: contractEmployee.firstName, lastName: contractEmployee.lastName, streetAddress: contractEmployee.streetAddress, city: contractEmployee.city, state: contractEmployee.state, zipCode: contractEmployee.zipCode, entrantType: contractEmployee.entrantType, dateOfBirth: entrant.dateOfBirth)
                 pass.rideAccess = contractEmployee.rideAccess
                 pass.areaAccess = contractEmployee.areaAccess
                 
@@ -169,9 +169,9 @@ class CheckPoint {
         case .Vendor:
             do {
                 // Creating an instance
-                let vendor = try Vendor(firstName: entrant.firstName, lastName: entrant.lastName, entrantType: entrant.entrantType, vendorCompany: entrant.vendorCompany, dateOfBirth: entrant.dateOfBirth, dateOfVisit: entrant.dateOfVisit)
+                let vendor = try Vendor(firstName: entrant.firstName, lastName: entrant.lastName, vendorCompany: entrant.vendorCompany, dateOfBirth: entrant.dateOfBirth, dateOfVisit: entrant.dateOfVisit)
                 // Constructing a pass
-                var pass = Pass(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: entrant.dateOfBirth, discountOnFood: entrant.discountOnFood, discountOnMerchandise: entrant.discountOnMerchandise, projectNumber: entrant.projectNumber, vendorCompany: entrant.vendorCompany, dateOfVisit: entrant.dateOfVisit)
+                var pass = Pass(firstName: vendor.firstName, lastName: vendor.lastName, entrantType: vendor.entrantType, dateOfBirth: vendor.dateOfBirth, vendorCompany: vendor.vendorCompany, dateOfVisit: vendor.dateOfVisit)
                 pass.rideAccess = vendor.rideAccess
                 pass.areaAccess = vendor.areaAccess
                 

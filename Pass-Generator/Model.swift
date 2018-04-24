@@ -22,12 +22,6 @@ enum AreaAccess: String {
 enum RideAccess: String {
     case accessAllRides
     case skipAllLines
-    // broken down allRides for ContractEmployees and Vendors
-    case amusementAreas
-    case kitchenAreas
-    case rideControlAreas
-    case maintenanceAreas
-    case officeAreas
 }
 
 
@@ -85,6 +79,7 @@ enum SecondRowButtonType {
     case Adult
     case Senior
     case VIP
+    case SeasonPass
     case FoodService
     case RideService
     case Maintenance

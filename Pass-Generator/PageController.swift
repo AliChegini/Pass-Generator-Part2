@@ -28,6 +28,7 @@ class PageController: UIViewController {
         
         if let firstNameUnwarpped = pass?.firstName, let lastNameUnwarpped = pass?.lastName {
             name.text = "\(firstNameUnwarpped) \(lastNameUnwarpped)"
+            print("\(firstNameUnwarpped)!\(lastNameUnwarpped)!")
         }
         
         if let passTypeUnwrapped = pass?.entrantType {
@@ -37,10 +38,11 @@ class PageController: UIViewController {
         // label.text = (label.text ?? "") + " some other word(s)"
         
         if let ridesAccessUnwrapped = pass?.rideAccess {
+            var phrase: String = ""
             for ride in ridesAccessUnwrapped {
-                rideAccess.text = (rideAccess.text ?? "") + " \(ride)"
+                phrase += " \(ride.rawValue)"
             }
-           
+            rideAccess.text = phrase
         }
         
         if let discountOnFoodUnwrapped = pass?.discountOnFood {
@@ -58,6 +60,12 @@ class PageController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    @IBAction func createNewPass(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 
 
 }

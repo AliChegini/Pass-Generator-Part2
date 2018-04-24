@@ -111,7 +111,7 @@
                                 <rect key="frame" x="0.0" y="130" width="768" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cd0-b4-8Mm">
-                                        <rect key="frame" x="0.0" y="0.0" width="192" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="40"/>
                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Button1"/>
@@ -120,7 +120,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xC-aq-bic">
-                                        <rect key="frame" x="192" y="0.0" width="192" height="40"/>
+                                        <rect key="frame" x="153.5" y="0.0" width="153.5" height="40"/>
                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Button2"/>
@@ -129,7 +129,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Gh-WL-XKd">
-                                        <rect key="frame" x="384" y="0.0" width="192" height="40"/>
+                                        <rect key="frame" x="307" y="0.0" width="154" height="40"/>
                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Button3"/>
@@ -138,12 +138,20 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsy-bq-TJo">
-                                        <rect key="frame" x="576" y="0.0" width="192" height="40"/>
+                                        <rect key="frame" x="461" y="0.0" width="153.5" height="40"/>
                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Button4"/>
                                         <connections>
                                             <action selector="button4Activated:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BIW-P7-Sa6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNS-xZ-vFV">
+                                        <rect key="frame" x="614.5" y="0.0" width="153.5" height="40"/>
+                                        <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Button5"/>
+                                        <connections>
+                                            <action selector="button5Activated:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A5K-gx-2qn"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -343,6 +351,9 @@
                                         <state key="normal" title="Populate Data">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="populateData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nDp-4q-Khh"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -417,6 +428,7 @@
                         <outlet property="button2" destination="1xC-aq-bic" id="xt0-FG-8Ag"/>
                         <outlet property="button3" destination="4Gh-WL-XKd" id="C37-bU-LrV"/>
                         <outlet property="button4" destination="Hsy-bq-TJo" id="KHL-CL-UFX"/>
+                        <outlet property="button5" destination="ZNS-xZ-vFV" id="M2E-7T-ghv"/>
                         <outlet property="city" destination="xS6-pc-7uM" id="7T5-46-o6h"/>
                         <outlet property="company" destination="Xet-DO-3FZ" id="s6S-3U-PPu"/>
                         <outlet property="dateOfBirth" destination="fwa-6k-eZM" id="REP-SN-dAv"/>
@@ -463,29 +475,29 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egd-op-h2A">
-                                        <rect key="frame" x="340" y="136" width="268" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RideAccess: " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egd-op-h2A">
+                                        <rect key="frame" x="340" y="136" width="268" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="h5X-KR-bw4"/>
+                                            <constraint firstAttribute="height" constant="50" id="h5X-KR-bw4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VuX-jG-LFW">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FaceImageAsset.png" translatesAutoresizingMaskIntoConstraints="NO" id="VuX-jG-LFW">
                                         <rect key="frame" x="20" y="20" width="300" height="260"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="mzU-vz-ZWq"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Discount N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sD-Pb-TBo">
-                                        <rect key="frame" x="340" y="196" width="268" height="20.5"/>
+                                        <rect key="frame" x="340" y="216" width="268" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Merch Discount N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ki5-q1-zBU">
-                                        <rect key="frame" x="340" y="226" width="268" height="20.5"/>
+                                        <rect key="frame" x="340" y="246" width="268" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -587,6 +599,9 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Create New Pass"/>
+                                <connections>
+                                    <action selector="createNewPass:" destination="0zf-5l-AAI" eventType="touchUpInside" id="K3Y-4v-sry"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -645,4 +660,7 @@
             <point key="canvasLocation" x="132.8125" y="99.609375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="FaceImageAsset.png" width="204" height="198"/>
+    </resources>
 </document>

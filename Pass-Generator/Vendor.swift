@@ -16,7 +16,7 @@ class Vendor: Entrant {
     var state: String? = nil
     var zipCode: String? = nil
     var entrantType: EntrantType
-    var areaAccess: [AreaAccess] = [.amusementAreas, .kitchenAreas]
+    var areaAccess: [AreaAccess] = []
     var rideAccess: [RideAccess] = []
     var dateOfBirth: Date?
     var discountOnFood: Int? = nil
@@ -27,11 +27,11 @@ class Vendor: Entrant {
     
     init(firstName: String?, lastName: String?, entrantType: EntrantType = .Vendor, vendorCompany: VendorCompany?, dateOfBirth: Date?, dateOfVisit: Date?) throws {
         
-        guard let firstNameUnwrapped = firstName else {
+        guard let firstNameUnwrapped = firstName.nilIfEmpty else {
             throw InitializerError.missingFirstName
         }
         
-        guard let lastNameUnwrapped = lastName else {
+        guard let lastNameUnwrapped = lastName.nilIfEmpty else {
             throw InitializerError.missingLastName
         }
         

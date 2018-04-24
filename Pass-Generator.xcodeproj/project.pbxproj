@@ -19,6 +19,7 @@
 		7C75073C2030121D00F70725 /* Guest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C75073B2030121D00F70725 /* Guest.swift */; };
 		7C75073E2030128D00F70725 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C75073D2030128D00F70725 /* Employee.swift */; };
 		7C8CB012203E722D00B3B800 /* TestCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8CB011203E722D00B3B800 /* TestCases.swift */; };
+		7CD30B4A208F5C90006A1BF1 /* FaceImageAsset.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD30B49208F5C90006A1BF1 /* FaceImageAsset.png */; };
 		7CF46CB5203BA6D600876429 /* CheckPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF46CB4203BA6D600876429 /* CheckPoint.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		7C75073B2030121D00F70725 /* Guest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guest.swift; sourceTree = "<group>"; };
 		7C75073D2030128D00F70725 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		7C8CB011203E722D00B3B800 /* TestCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCases.swift; sourceTree = "<group>"; };
+		7CD30B49208F5C90006A1BF1 /* FaceImageAsset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FaceImageAsset.png; sourceTree = "<group>"; };
 		7CF46CB4203BA6D600876429 /* CheckPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 		7C1ECC50200E588000A1F242 /* Pass-Generator */ = {
 			isa = PBXGroup;
 			children = (
+				7CD30B49208F5C90006A1BF1 /* FaceImageAsset.png */,
 				7C1ECC51200E588000A1F242 /* AppDelegate.swift */,
 				7C1ECC53200E588000A1F242 /* ViewController.swift */,
 				7C3DCCC2208DFC2000FA2387 /* PageController.swift */,
@@ -150,6 +153,7 @@
 				7C1ECC5C200E588000A1F242 /* LaunchScreen.storyboard in Resources */,
 				7C1ECC59200E588000A1F242 /* Assets.xcassets in Resources */,
 				7C1ECC57200E588000A1F242 /* Main.storyboard in Resources */,
+				7CD30B4A208F5C90006A1BF1 /* FaceImageAsset.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

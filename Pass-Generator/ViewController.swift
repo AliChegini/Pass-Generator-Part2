@@ -19,6 +19,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
     @IBOutlet weak var button4: UIButton!
+    @IBOutlet weak var button5: UIButton!
+    
     
     @IBOutlet weak var dateOfBirth: UITextField!
     @IBOutlet weak var dateOfVisit: UITextField!
@@ -46,6 +48,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         hideButtons()
         
+        // Observer for Keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
@@ -53,7 +56,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
         
         // adding Done button for all the input fields (Keyboard, UIPicker)
-        
         dateOfBirth.inputAccessoryView = toolBar
         dateOfVisit.inputAccessoryView = toolBar
         project.inputAccessoryView = toolBar
@@ -64,8 +66,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         city.inputAccessoryView = toolBar
         state.inputAccessoryView = toolBar
         zipCode.inputAccessoryView = toolBar
-        
-        
         
         
         // Company picker
@@ -100,12 +100,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // sending variable via segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPass" {
             let vc = segue.destination as! PageController
@@ -114,13 +115,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     
-    
     @IBAction func guestActivated(_ sender: UIButton) {
         showButtons()
         button1.setTitle("Child", for: .normal)
         button2.setTitle("Adult", for: .normal)
         button3.setTitle("Senior", for: .normal)
         button4.setTitle("VIP", for: .normal)
+        button5.setTitle("SeasonPass", for: .normal)
         
         firstRowButton = FirstRowButtonType.Guest
     }
@@ -132,6 +133,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         button2.setTitle("Ride Service", for: .normal)
         button3.setTitle("Maintenance", for: .normal)
         button4.setTitle("Contract", for: .normal)
+        button5.isHidden = true
         
         firstRowButton = FirstRowButtonType.Employee
     }
@@ -142,6 +144,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         enableAllTextField()
         disableTextField(textField: dateOfVisit)
         disableTextField(textField: project)
+        disableTextField(textField: company)
         
         firstRowButton = FirstRowButtonType.Manager
     }
@@ -168,6 +171,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             enableAllTextField()
             disableTextField(textField: dateOfVisit)
             disableTextField(textField: project)
+            disableTextField(textField: company)
             secondRowButton = SecondRowButtonType.FoodService
         }
     }
@@ -184,6 +188,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             enableAllTextField()
             disableTextField(textField: dateOfVisit)
             disableTextField(textField: project)
+            disableTextField(textField: company)
             secondRowButton = SecondRowButtonType.RideService
         }
     }
@@ -194,6 +199,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if sender.currentTitle == "Senior" {
             disableAllTextFields()
             enableTextField(textField: dateOfBirth)
+            enableTextField(textField: firstName)
+            enableTextField(textField: lastName)
             secondRowButton = SecondRowButtonType.Senior
         }
         
@@ -201,6 +208,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             enableAllTextField()
             disableTextField(textField: dateOfVisit)
             disableTextField(textField: project)
+            disableTextField(textField: company)
             secondRowButton = SecondRowButtonType.Maintenance
         }
     }
@@ -216,8 +224,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if sender.currentTitle == "Contract" {
             enableAllTextField()
             disableTextField(textField: dateOfVisit)
+            disableTextField(textField: company)
 
             secondRowButton = SecondRowButtonType.Contract
+        }
+    }
+    
+    
+    @IBAction func button5Activated(_ sender: UIButton) {
+        if sender.currentTitle == "SeasonPass" {
+            enableAllTextField()
+            disableTextField(textField: dateOfVisit)
+            disableTextField(textField: project)
+            disableTextField(textField: company)
+            
+            secondRowButton = SecondRowButtonType.SeasonPass
         }
     }
     
@@ -280,7 +301,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         switch firstRowButtonUnwrapped {
         case .Guest:
-            // There are 4 options for Guests
+            // There are 5 options for Guests
             //Child
             if secondRowButton == SecondRowButtonType.Child {
                 let dateFormatter = DateFormatter()
@@ -306,6 +327,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if secondRowButton == SecondRowButtonType.Senior {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
+                
                 if let dateOfBirthUnwrapped = dateOfBirth.text {
                     let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
                     do {
@@ -323,12 +345,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 pass = CheckPoint.generatePass(entrant: vip)
             }
             
+            // SeasonPass
+            if secondRowButton == SecondRowButtonType.SeasonPass {
+                do {
+                    let seasonPassGuest = try SeasonPassGuest(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
+                    
+                    pass = CheckPoint.generatePass(entrant: seasonPassGuest)
+                } catch {
+                    genericAlert(error: error)
+                }
+                
+            }
+            
         case .Employee:
             // There are 4 options for employees
             // FoodServiceEmployee
             if secondRowButton == SecondRowButtonType.FoodService {
                 do {
-                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
                     
                     pass = CheckPoint.generatePass(entrant: foodServiceEmployee)
                 } catch {
@@ -339,7 +373,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // RideServiceEmployee
             if secondRowButton == SecondRowButtonType.RideService {
                 do {
-                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
                     
                     pass = CheckPoint.generatePass(entrant: rideServiceEmployee)
                 } catch {
@@ -350,7 +384,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // MaintenanceEmployee
             if secondRowButton == SecondRowButtonType.Maintenance {
                 do {
-                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
                     
                     pass = CheckPoint.generatePass(entrant: maintenanceEmployee)
                 } catch {
@@ -373,7 +407,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
         case .Manager:
             do {
-                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
                 
                 pass = CheckPoint.generatePass(entrant: manager)
             } catch {
@@ -385,6 +419,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             dateFormatter.dateFormat = "dd-MM-yyyy"
             
             if let vendorCompanyUnwrapped = company.text, let dateOfBirthUnwrapped = dateOfBirth.text, let dateOfVisitUnwrapped = dateOfVisit.text {
+                
                 let dateOfBirthFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
                 let dateOfVisitFromString: Date? = dateFormatter.date(from: dateOfVisitUnwrapped)
                 do {
@@ -402,6 +437,113 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     
+    @IBAction func populateData(_ sender: UIButton) {
+        
+        guard let firstRowButtonUnwrapped = firstRowButton else {
+            print("Empty")
+            return
+        }
+        
+        switch firstRowButtonUnwrapped {
+        case .Guest:
+            // There are 5 options for Guests
+            //Child
+            if secondRowButton == SecondRowButtonType.Child {
+                dateOfBirth.text = "01-01-2014"
+            }
+        
+    
+            // Adult
+            if secondRowButton == SecondRowButtonType.Adult {
+                
+            }
+            
+            // Senior
+            if secondRowButton == SecondRowButtonType.Senior {
+                firstName.text = "Walter"
+                lastName.text = "White"
+                dateOfBirth.text = "01-01-1960"
+            }
+            
+            // VIP
+            if secondRowButton == SecondRowButtonType.VIP {
+                
+            }
+            
+            // SeasonPass
+            if secondRowButton == SecondRowButtonType.SeasonPass {
+                firstName.text = "Walter"
+                lastName.text = "White"
+                dateOfBirth.text = "01-01-1960"
+                streetAddress.text = "ABQ"
+                city.text = "ABQ"
+                state.text = "New Mexico"
+                zipCode.text = "1234"
+            }
+            
+        case .Employee:
+            // There are 4 options for employees
+            // FoodServiceEmployee
+            if secondRowButton == SecondRowButtonType.FoodService {
+                firstName.text = "Walter"
+                lastName.text = "White"
+                streetAddress.text = "ABQ"
+                city.text = "ABQ"
+                state.text = "New Mexico"
+                zipCode.text = "1234"
+            }
+            
+            // RideServiceEmployee
+            if secondRowButton == SecondRowButtonType.RideService {
+                firstName.text = "Jessi"
+                lastName.text = "Pinkman"
+                streetAddress.text = "ABQ"
+                city.text = "ABQ"
+                state.text = "New Mexico"
+                zipCode.text = "4321"
+            }
+            
+            // MaintenanceEmployee
+            if secondRowButton == SecondRowButtonType.Maintenance {
+                firstName.text = "Saul"
+                lastName.text = "Goodman"
+                streetAddress.text = "ABQ"
+                city.text = "ABQ"
+                state.text = "New Mexico"
+                zipCode.text = "00000"
+            }
+            
+            // ContractEmployee
+            if secondRowButton == SecondRowButtonType.Contract {
+                firstName.text = "Jimmi"
+                lastName.text = "Markson"
+                streetAddress.text = "ABQ"
+                city.text = "ABQ"
+                state.text = "New Mexico"
+                zipCode.text = "00000"
+                project.text = "1002"
+            }
+            
+        case .Manager:
+            firstName.text = "Elon"
+            lastName.text = "Musk"
+            streetAddress.text = "ABQ"
+            city.text = "ABQ"
+            state.text = "Nevada"
+            zipCode.text = "88888"
+            
+            
+        case .Vendor:
+            firstName.text = "Jack"
+            lastName.text = "Ma"
+            company.text = "Fedex"
+            dateOfBirth.text = "01-01-1960"
+            dateOfVisit.text = "01-01-2015"
+        }
+        
+    }
+    
+    
     // Helper methods
     // Method to hide the buttons at the second row
     func hideButtons() {
@@ -409,6 +551,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         button2.isHidden = true
         button3.isHidden = true
         button4.isHidden = true
+        button5.isHidden = true
     }
     
     // Method to show the buttons at the second row
@@ -417,6 +560,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         button2.isHidden = false
         button3.isHidden = false
         button4.isHidden = false
+        button5.isHidden = false
         
     }
     
