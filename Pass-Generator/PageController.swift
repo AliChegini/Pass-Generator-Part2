@@ -16,6 +16,7 @@ class PageController: UIViewController {
     @IBOutlet weak var rideAccess: UILabel!
     @IBOutlet weak var foodDiscount: UILabel!
     @IBOutlet weak var merchDiscount: UILabel!
+    @IBOutlet weak var result: UILabel!
     
     
     var pass: Pass?
@@ -25,17 +26,14 @@ class PageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         if let firstNameUnwarpped = pass?.firstName, let lastNameUnwarpped = pass?.lastName {
             name.text = "\(firstNameUnwarpped) \(lastNameUnwarpped)"
-            print("\(firstNameUnwarpped)!\(lastNameUnwarpped)!")
         }
         
         if let passTypeUnwrapped = pass?.entrantType {
             passType.text = "\(passTypeUnwrapped)"
         }
         
-        // label.text = (label.text ?? "") + " some other word(s)"
         
         if let ridesAccessUnwrapped = pass?.rideAccess {
             var phrase: String = ""
@@ -66,6 +64,103 @@ class PageController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-
-
+    @IBAction func testAmusementArea(_ sender: UIButton) {
+        // Force unwrapping the pass is OK, as we are 100% sure pass is not nil
+        // since user will only see this page if pass is initialized
+        if pass!.areaAccess.contains(.amusementAreas) {
+            result.backgroundColor = .green
+        } else {
+            result.backgroundColor = .red
+        }
+        result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .amusementAreas)
+    }
+    
+    
+    @IBAction func testKitchenArea(_ sender: UIButton) {
+        // Force unwrapping the pass is OK, as we are 100% sure pass is not nil
+        // since user will only see this page if pass is initialized
+        if pass!.areaAccess.contains(.kitchenAreas) {
+            result.backgroundColor = .green
+        } else {
+            result.backgroundColor = .red
+        }
+        result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .kitchenAreas)
+    }
+    
+    
+    @IBAction func testOfficeArea(_ sender: UIButton) {
+        // Force unwrapping the pass is OK, as we are 100% sure pass is not nil
+        // since user will only see this page if pass is initialized
+        if pass!.areaAccess.contains(.officeAreas) {
+            result.backgroundColor = .green
+        } else {
+            result.backgroundColor = .red
+        }
+        result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .officeAreas)
+    }
+    
+    
+    @IBAction func testMaintenanceArea(_ sender: UIButton) {
+        // Force unwrapping the pass is OK, as we are 100% sure pass is not nil
+        // since user will only see this page if pass is initialized
+        if pass!.areaAccess.contains(.maintenanceAreas) {
+            result.backgroundColor = .green
+        } else {
+            result.backgroundColor = .red
+        }
+        result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .maintenanceAreas)
+    }
+    
+    
+    @IBAction func testRideControlArea(_ sender: UIButton) {
+        // Force unwrapping the pass is OK, as we are 100% sure pass is not nil
+        // since user will only see this page if pass is initialized
+        if pass!.areaAccess.contains(.rideControlAreas) {
+            result.backgroundColor = .green
+        } else {
+            result.backgroundColor = .red
+        }
+        result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .rideControlAreas)
+    }
+    
+    
+    @IBAction func testRideAccess(_ sender: UIButton) {
+        result.backgroundColor = .white
+        
+        if let ridesAccessUnwrapped = pass?.rideAccess {
+            var phrase: String = ""
+            for ride in ridesAccessUnwrapped {
+                phrase += "\(ride.rawValue)\n"
+            }
+            result.text = phrase
+            
+            if ridesAccessUnwrapped.count == 0 {
+                result.text = "No Ride Access!"
+            }
+        }
+    }
+    
+    
+    
+    @IBAction func testDiscountAccess(_ sender: UIButton) {
+        result.backgroundColor = .white
+        var phrase = ""
+        
+        if let discountOnFoodUnwrapped = pass?.discountOnFood {
+            phrase += "\n\(discountOnFoodUnwrapped)% Food Discount"
+            print(discountOnFoodUnwrapped)
+        } else {
+            result.text = "No Discount!"
+        }
+        
+        if let discountOnMerchandiseUnwrapped = pass?.discountOnMerchandise {
+            phrase += "\n\(discountOnMerchandiseUnwrapped)% Merch Discount"
+        } else {
+            result.text = "No Discount!"
+        }
+        
+        result.text = phrase
+    }
+    
+    
 }

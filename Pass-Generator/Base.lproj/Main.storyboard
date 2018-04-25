@@ -458,7 +458,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRO-06-toJ">
-                                <rect key="frame" x="70" y="114" width="628" height="300"/>
+                                <rect key="frame" x="70" y="84" width="628" height="300"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name N/A" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4b-li-nLT">
                                         <rect key="frame" x="340" y="20" width="268" height="36"/>
@@ -527,23 +527,23 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZE3-61-LHt">
-                                <rect key="frame" x="20" y="454" width="728" height="1"/>
+                                <rect key="frame" x="20" y="404" width="728" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="uqX-cR-jBb"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access Testing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INz-DX-OOb">
-                                <rect key="frame" x="20" y="465" width="728" height="60"/>
+                                <rect key="frame" x="20" y="415" width="728" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="WAg-74-4VE"/>
+                                    <constraint firstAttribute="height" constant="50" id="WAg-74-4VE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm the pass has the expected level of access when swiped at a kiosk" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HND-63-eSG">
-                                <rect key="frame" x="20" y="535" width="728" height="30"/>
+                                <rect key="frame" x="20" y="475" width="728" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="fHI-b6-hhn"/>
                                 </constraints>
@@ -551,14 +551,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="CcC-Jk-jF6">
-                                <rect key="frame" x="20" y="575" width="728" height="60"/>
+                                <rect key="frame" x="20" y="515" width="728" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1a2-tU-Uzv">
                                         <rect key="frame" x="0.0" y="0.0" width="229.5" height="60"/>
                                         <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Area Access"/>
+                                        <state key="normal" title="Amusement Area"/>
+                                        <connections>
+                                            <action selector="testAmusementArea:" destination="0zf-5l-AAI" eventType="touchUpInside" id="eQR-IE-AER"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gK7-Jy-y7A">
                                         <rect key="frame" x="249.5" y="0.0" width="229" height="60"/>
@@ -566,6 +569,9 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Ride Access"/>
+                                        <connections>
+                                            <action selector="testRideAccess:" destination="0zf-5l-AAI" eventType="touchUpInside" id="clN-w6-BgH"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8H-XZ-NVs">
                                         <rect key="frame" x="498.5" y="0.0" width="229.5" height="60"/>
@@ -573,14 +579,17 @@
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Discount Access"/>
+                                        <connections>
+                                            <action selector="testDiscountAccess:" destination="0zf-5l-AAI" eventType="touchUpInside" id="UyW-Ve-IIw"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="PMd-4c-AiQ"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Results" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tB2-Xl-XwC">
-                                <rect key="frame" x="30" y="655" width="708" height="200"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Results" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tB2-Xl-XwC">
+                                <rect key="frame" x="30" y="680" width="708" height="200"/>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="F6D-9R-DYx"/>
@@ -590,7 +599,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ib2-3D-WQr">
-                                <rect key="frame" x="234.5" y="885" width="300" height="70"/>
+                                <rect key="frame" x="234" y="895" width="300" height="70"/>
                                 <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="adG-XY-g4v"/>
@@ -603,29 +612,80 @@
                                     <action selector="createNewPass:" destination="0zf-5l-AAI" eventType="touchUpInside" id="K3Y-4v-sry"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="M53-t4-7z9">
+                                <rect key="frame" x="20" y="595" width="728" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L64-nh-aHy">
+                                        <rect key="frame" x="0.0" y="0.0" width="167" height="60"/>
+                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Kitchen Area"/>
+                                        <connections>
+                                            <action selector="testKitchenArea:" destination="0zf-5l-AAI" eventType="touchUpInside" id="vje-JP-xZk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Slg-Ob-bKn">
+                                        <rect key="frame" x="187" y="0.0" width="167" height="60"/>
+                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Office Area"/>
+                                        <connections>
+                                            <action selector="testOfficeArea:" destination="0zf-5l-AAI" eventType="touchUpInside" id="oV3-vJ-Gg5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="61z-hQ-ga2">
+                                        <rect key="frame" x="374" y="0.0" width="167" height="60"/>
+                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Maintenance Area"/>
+                                        <connections>
+                                            <action selector="testMaintenanceArea:" destination="0zf-5l-AAI" eventType="touchUpInside" id="J2Y-YY-aaW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsd-Qf-DJX">
+                                        <rect key="frame" x="561" y="0.0" width="167" height="60"/>
+                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="RideControl Area"/>
+                                        <connections>
+                                            <action selector="testRideControlArea:" destination="0zf-5l-AAI" eventType="touchUpInside" id="CYW-Ea-2U1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="FVG-5w-qN9"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="mRO-06-toJ" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="70" id="1T0-qW-VdY"/>
                             <constraint firstItem="Ib2-3D-WQr" firstAttribute="centerX" secondItem="ARb-9O-UOH" secondAttribute="centerX" id="25u-tR-hGf"/>
+                            <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="M53-t4-7z9" secondAttribute="trailing" constant="20" id="49X-DK-PU0"/>
                             <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="tB2-Xl-XwC" secondAttribute="trailing" constant="30" id="6LP-16-XS2"/>
+                            <constraint firstItem="M53-t4-7z9" firstAttribute="top" secondItem="CcC-Jk-jF6" secondAttribute="bottom" constant="20" id="7Ce-ty-K7Z"/>
                             <constraint firstItem="HND-63-eSG" firstAttribute="top" secondItem="INz-DX-OOb" secondAttribute="bottom" constant="10" id="BRr-PF-Q8f"/>
                             <constraint firstItem="CcC-Jk-jF6" firstAttribute="top" secondItem="HND-63-eSG" secondAttribute="bottom" constant="10" id="BiH-BE-Eag"/>
+                            <constraint firstItem="M53-t4-7z9" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="20" id="EcV-mp-dTa"/>
                             <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="ZE3-61-LHt" secondAttribute="trailing" constant="20" id="FxV-z8-1s7"/>
                             <constraint firstItem="HND-63-eSG" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="20" id="Ksn-P8-WKN"/>
                             <constraint firstItem="INz-DX-OOb" firstAttribute="top" secondItem="ZE3-61-LHt" secondAttribute="bottom" constant="10" id="Qgx-Dl-g7x"/>
-                            <constraint firstItem="mRO-06-toJ" firstAttribute="top" secondItem="xo2-oA-gKo" secondAttribute="top" constant="50" id="UBA-ZG-ika"/>
-                            <constraint firstItem="tB2-Xl-XwC" firstAttribute="top" secondItem="CcC-Jk-jF6" secondAttribute="bottom" constant="20" id="Xmc-zp-2V0"/>
+                            <constraint firstItem="mRO-06-toJ" firstAttribute="top" secondItem="xo2-oA-gKo" secondAttribute="top" constant="20" id="UBA-ZG-ika"/>
+                            <constraint firstItem="xo2-oA-gKo" firstAttribute="bottom" secondItem="Ib2-3D-WQr" secondAttribute="bottom" constant="15" id="edO-Vl-xNM"/>
                             <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="mRO-06-toJ" secondAttribute="trailing" constant="70" id="ekL-jS-sXz"/>
                             <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="CcC-Jk-jF6" secondAttribute="trailing" constant="20" id="elO-hu-ArP"/>
                             <constraint firstItem="ZE3-61-LHt" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="20" id="gHZ-3j-2kH"/>
                             <constraint firstItem="tB2-Xl-XwC" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="30" id="kCb-Nr-reo"/>
                             <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="HND-63-eSG" secondAttribute="trailing" constant="20" id="kRB-Rs-nlr"/>
-                            <constraint firstItem="ZE3-61-LHt" firstAttribute="top" secondItem="mRO-06-toJ" secondAttribute="bottom" constant="40" id="kw2-Cg-tis"/>
+                            <constraint firstItem="ZE3-61-LHt" firstAttribute="top" secondItem="mRO-06-toJ" secondAttribute="bottom" constant="20" id="kw2-Cg-tis"/>
                             <constraint firstItem="xo2-oA-gKo" firstAttribute="trailing" secondItem="INz-DX-OOb" secondAttribute="trailing" constant="20" id="mEd-co-HpK"/>
+                            <constraint firstItem="Ib2-3D-WQr" firstAttribute="top" secondItem="tB2-Xl-XwC" secondAttribute="bottom" constant="15" id="oeN-Oc-qYV"/>
                             <constraint firstItem="INz-DX-OOb" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="20" id="r10-X3-guK"/>
                             <constraint firstItem="CcC-Jk-jF6" firstAttribute="leading" secondItem="xo2-oA-gKo" secondAttribute="leading" constant="20" id="umS-La-Idh"/>
-                            <constraint firstItem="Ib2-3D-WQr" firstAttribute="top" secondItem="tB2-Xl-XwC" secondAttribute="bottom" constant="30" id="wsr-iL-7sQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xo2-oA-gKo"/>
                     </view>
@@ -634,6 +694,7 @@
                         <outlet property="merchDiscount" destination="ki5-q1-zBU" id="b6U-eK-API"/>
                         <outlet property="name" destination="Y4b-li-nLT" id="AKc-kZ-bLb"/>
                         <outlet property="passType" destination="UmR-SV-bUb" id="k5O-aW-Ys1"/>
+                        <outlet property="result" destination="tB2-Xl-XwC" id="3Ul-og-Mr5"/>
                         <outlet property="rideAccess" destination="egd-op-h2A" id="yvY-ku-f6v"/>
                     </connections>
                 </viewController>
