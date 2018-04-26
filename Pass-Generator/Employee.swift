@@ -94,7 +94,6 @@ class MaintenanceEmployee: Employee {
     }
 }
 
-// TODO: Birthday message does not work for manager and employees, works only for child
 
 class Manager: Employee {
     init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .Manager , dateOfBirth: Date?) throws {

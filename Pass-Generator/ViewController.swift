@@ -92,7 +92,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     
-    // sending variable via segue
+    // sending pass via segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showPass" {
             let vc = segue.destination as! PageController
@@ -265,6 +265,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if secondRowButton == SecondRowButtonType.Child {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd-MM-yyyy"
+                createDateFormatter()
                 if let dateOfBirthUnwrapped = dateOfBirth.text {
                     let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
                     do {
@@ -281,6 +282,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let adult = ClassicGuest()
                 pass = CheckPoint.generatePass(entrant: adult)
             }
+            
             
             // Senior
             if secondRowButton == SecondRowButtonType.Senior {
@@ -306,14 +308,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             // SeasonPass
             if secondRowButton == SecondRowButtonType.SeasonPass {
-                do {
-                    let seasonPassGuest = try SeasonPassGuest(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
-                    
-                    pass = CheckPoint.generatePass(entrant: seasonPassGuest)
-                } catch {
-                    genericAlert(error: error)
-                }
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MM-yyyy"
                 
+                if let dateOfBirthUnwrapped = dateOfBirth.text {
+                    let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
+                    do {
+                        let seasonPassGuest = try SeasonPassGuest(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
+                        
+                        pass = CheckPoint.generatePass(entrant: seasonPassGuest)
+                    } catch {
+                        genericAlert(error: error)
+                    }
+                }
             }
             
         case .Employee:
@@ -365,13 +372,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         case .Manager:
-            do {
-                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
-                
-                pass = CheckPoint.generatePass(entrant: manager)
-            } catch {
-                genericAlert(error: error)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yyyy"
+            
+            if let dateOfBirthUnwrapped = dateOfBirth.text {
+                let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
+                    do {
+                        let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
+                        
+                        pass = CheckPoint.generatePass(entrant: manager)
+                    } catch {
+                        genericAlert(error: error)
+                }
             }
+            
             
         case .Vendor:
             let dateFormatter = DateFormatter()
@@ -434,7 +448,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if secondRowButton == SecondRowButtonType.SeasonPass {
                 firstName.text = "Walter"
                 lastName.text = "White"
-                dateOfBirth.text = "01-01-1960"
                 streetAddress.text = "ABQ"
                 city.text = "ABQ"
                 state.text = "New Mexico"
@@ -565,28 +578,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         textField.text = ""
     }
     
-    // Generic function to show error messages to user
-    func genericAlert<T>(error: T) {
-        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
-        self.present(alert, animated: true)
-    }
-    
-    
-    // Extra Credit
-    // check if the textField is enabled and have allowed length: longer than 2 char
-    func validateTextField(textField: UITextField) {
-        // branch to handle Zip Code
-        if textField.isEnabled == true && textField.placeholder == "Zip Code" {
-            if textField.text!.count < 3 || textField.text!.isNumber == false {
-                genericAlert(error: "Input for \(textField.placeholder!) can only be numerical, longer than 2 digits")
-            }
-        }
-        // branch to handle all the textfields
-        if textField.isEnabled == true && textField.text!.count < 3 {
-            genericAlert(error: "Input for \(textField.placeholder!) shoud be longer than 2 characters")
-        }
-    }
     
     func validateAllTextFields() {
         validateTextField(textField: firstName)
