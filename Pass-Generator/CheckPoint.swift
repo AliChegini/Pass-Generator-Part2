@@ -141,7 +141,7 @@ class CheckPoint {
                 // Creating an instance
                 let manager = try Manager(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
-                var pass = Pass(firstName: manager.firstName, lastName: manager.lastName, entrantType: manager.entrantType)
+                var pass = Pass(firstName: manager.firstName, lastName: manager.lastName, entrantType: manager.entrantType, dateOfBirth: manager.dateOfBirth)
                 pass.rideAccess = manager.rideAccess
                 pass.areaAccess = manager.areaAccess
                 pass.discountOnFood = manager.discountOnFood
@@ -155,7 +155,7 @@ class CheckPoint {
         case .ContractEmployee:
             do {
                 // Creating an instance
-                let contractEmployee = try ContractEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, projectNumber: entrant.projectNumber)
+                let contractEmployee = try ContractEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, projectNumber: entrant.projectNumber, dateOfBirth: nil)
                 // Constructing a pass
                 var pass = Pass(firstName: contractEmployee.firstName, lastName: contractEmployee.lastName, streetAddress: contractEmployee.streetAddress, city: contractEmployee.city, state: contractEmployee.state, zipCode: contractEmployee.zipCode, entrantType: contractEmployee.entrantType, dateOfBirth: entrant.dateOfBirth)
                 pass.rideAccess = contractEmployee.rideAccess
@@ -196,7 +196,7 @@ class CheckPoint {
                 let currentTime = Date()
                 let registeredSwipeTimePlusDelay = registeredSwipeTime.addingTimeInterval(delayInSeconds)
                 if currentTime < registeredSwipeTimePlusDelay {
-                    phrase = "Alert: Your pass has just been swiped, Try again later...\nCurrent Time: \(currentTime)\nLast Swipe  : \(registeredSwipeTime)"
+                    phrase = "This pass has just been swiped, Try again later...\nCurrent Time: \(currentTime)\nLast Swipe  : \(registeredSwipeTime)"
                 } else {
                     pass.swipeTime = currentTime
                     phrase = "\(pass.entrantType) --- Allowed entry to \(area)\n \(pass.swipeTime!)"

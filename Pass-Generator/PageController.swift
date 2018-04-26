@@ -126,7 +126,6 @@ class PageController: UIViewController {
     
     @IBAction func testRideAccess(_ sender: UIButton) {
         result.backgroundColor = .white
-        
         if let ridesAccessUnwrapped = pass?.rideAccess {
             var phrase: String = ""
             for ride in ridesAccessUnwrapped {
@@ -141,25 +140,13 @@ class PageController: UIViewController {
     }
     
     
-    
     @IBAction func testDiscountAccess(_ sender: UIButton) {
         result.backgroundColor = .white
-        var phrase = ""
-        
-        if let discountOnFoodUnwrapped = pass?.discountOnFood {
-            phrase += "\n\(discountOnFoodUnwrapped)% Food Discount"
-            print(discountOnFoodUnwrapped)
+        if let discountOnFoodUnwrapped = pass?.discountOnFood, let discountOnMerchandiseUnwrapped = pass?.discountOnMerchandise {
+            result.text = "\n\(discountOnFoodUnwrapped)% Food Discount\n\(discountOnMerchandiseUnwrapped)% Merch Discount"
         } else {
             result.text = "No Discount!"
         }
-        
-        if let discountOnMerchandiseUnwrapped = pass?.discountOnMerchandise {
-            phrase += "\n\(discountOnMerchandiseUnwrapped)% Merch Discount"
-        } else {
-            result.text = "No Discount!"
-        }
-        
-        result.text = phrase
     }
     
     

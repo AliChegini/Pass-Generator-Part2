@@ -72,7 +72,7 @@ class Employee: Entrant {
 
 
 class FoodServiceEmployee: Employee {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .FoodServiceEmployee, dateOfBirth: Date? = nil) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .FoodServiceEmployee, dateOfBirth: Date?) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth)
         self.areaAccess = [.amusementAreas, .kitchenAreas]
     }
@@ -80,7 +80,7 @@ class FoodServiceEmployee: Employee {
 
 
 class RideServiceEmployee : Employee {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .RideServiceEmployee, dateOfBirth: Date? = nil) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .RideServiceEmployee, dateOfBirth: Date?) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth)
         self.areaAccess = [.amusementAreas, .rideControlAreas]
     }
@@ -88,15 +88,16 @@ class RideServiceEmployee : Employee {
 
 
 class MaintenanceEmployee: Employee {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .MaintenanceEmployee , dateOfBirth: Date? = nil) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .MaintenanceEmployee , dateOfBirth: Date?) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth)
         self.areaAccess = [.amusementAreas, .kitchenAreas, .rideControlAreas, .maintenanceAreas]
     }
 }
 
+// TODO: Birthday message does not work for manager and employees, works only for child
 
 class Manager: Employee {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .Manager , dateOfBirth: Date? = nil) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .Manager , dateOfBirth: Date?) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth)
         self.areaAccess = [.amusementAreas, .kitchenAreas, .rideControlAreas, .maintenanceAreas, .officeAreas]
         self.discountOnFood = 25
@@ -106,7 +107,7 @@ class Manager: Employee {
 
 
 class ContractEmployee: Employee {
-    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .ContractEmployee, projectNumber: Int?, dateOfBirth: Date? = nil) throws {
+    init(firstName: String?, lastName: String?, streetAddress: String?, city: String?, state: String?, zipCode: String?, entrantType: EntrantType = .ContractEmployee, projectNumber: Int?, dateOfBirth: Date?) throws {
         try super.init(firstName: firstName, lastName: lastName, streetAddress: streetAddress, city: city, state: state, zipCode: zipCode, entrantType: entrantType, dateOfBirth: dateOfBirth, projectNumber: projectNumber)
         self.rideAccess = []
         

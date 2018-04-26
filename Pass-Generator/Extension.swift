@@ -57,6 +57,14 @@ extension Optional where Wrapped == String {
 }
 
 
+// extension to check if a textfiled content is numerical or not
+extension String  {
+    var isNumber: Bool {
+        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
+}
+
+
 
 
 

@@ -21,7 +21,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var button4: UIButton!
     @IBOutlet weak var button5: UIButton!
     
-    
     @IBOutlet weak var dateOfBirth: UITextField!
     @IBOutlet weak var dateOfVisit: UITextField!
     @IBOutlet weak var project: UITextField!
@@ -37,13 +36,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var secondRowButton: SecondRowButtonType? = nil
     
     var pass: Pass? = nil
-    
     let companyData: [String] = [VendorCompany.Acme.rawValue, VendorCompany.Fedex.rawValue, VendorCompany.NWElectrical.rawValue, VendorCompany.Orkin.rawValue]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
         //test()
         
         hideButtons()
@@ -52,27 +49,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        // toolbar
-        let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
+        // Adding Done button for all the input fields (Keyboard, UIPicker)
+        addDoneButton()
         
-        // adding Done button for all the input fields (Keyboard, UIPicker)
-        dateOfBirth.inputAccessoryView = toolBar
-        dateOfVisit.inputAccessoryView = toolBar
-        project.inputAccessoryView = toolBar
-        firstName.inputAccessoryView = toolBar
-        lastName.inputAccessoryView = toolBar
-        company.inputAccessoryView = toolBar
-        streetAddress.inputAccessoryView = toolBar
-        city.inputAccessoryView = toolBar
-        state.inputAccessoryView = toolBar
-        zipCode.inputAccessoryView = toolBar
-        
+        // Setting placeholders for textfields
+        insertPlaceHolders()
         
         // Company picker
         let companyPicker = UIPickerView()
         company.inputView = companyPicker
         companyPicker.delegate = self
-        company.inputAccessoryView = toolBar
         
         self.hideKeyboardWhenTappedAround()
     }
@@ -141,38 +127,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func managerActivated(_ sender: UIButton) {
         hideButtons()
-        enableAllTextField()
-        disableTextField(textField: dateOfVisit)
-        disableTextField(textField: project)
-        disableTextField(textField: company)
-        
         firstRowButton = FirstRowButtonType.Manager
+        setActiveTextFields()
     }
     
     
     @IBAction func vendorActivated(_ sender: UIButton) {
         hideButtons()
-        enableAllTextField()
-        disableTextField(textField: project)
-        
         firstRowButton = FirstRowButtonType.Vendor
+        setActiveTextFields()
     }
-    
     
     
     @IBAction func button1Activated(_ sender: UIButton) {
         if sender.currentTitle == "Child" {
-            disableAllTextFields()
-            enableTextField(textField: dateOfBirth)
             secondRowButton = SecondRowButtonType.Child
+            setActiveTextFields()
         }
         
         if sender.currentTitle == "Food Service" {
-            enableAllTextField()
-            disableTextField(textField: dateOfVisit)
-            disableTextField(textField: project)
-            disableTextField(textField: company)
             secondRowButton = SecondRowButtonType.FoodService
+            setActiveTextFields()
         }
     }
     
@@ -180,16 +155,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func button2Activated(_ sender: UIButton) {
         if sender.currentTitle == "Adult" {
-            disableAllTextFields()
             secondRowButton = SecondRowButtonType.Adult
+            setActiveTextFields()
         }
         
         if sender.currentTitle == "Ride Service" {
-            enableAllTextField()
-            disableTextField(textField: dateOfVisit)
-            disableTextField(textField: project)
-            disableTextField(textField: company)
             secondRowButton = SecondRowButtonType.RideService
+            setActiveTextFields()
         }
     }
     
@@ -197,19 +169,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func button3Activated(_ sender: UIButton) {
         if sender.currentTitle == "Senior" {
-            disableAllTextFields()
-            enableTextField(textField: dateOfBirth)
-            enableTextField(textField: firstName)
-            enableTextField(textField: lastName)
             secondRowButton = SecondRowButtonType.Senior
+            setActiveTextFields()
         }
         
         if sender.currentTitle == "Maintenance" {
-            enableAllTextField()
-            disableTextField(textField: dateOfVisit)
-            disableTextField(textField: project)
-            disableTextField(textField: company)
             secondRowButton = SecondRowButtonType.Maintenance
+            setActiveTextFields()
         }
     }
     
@@ -217,28 +183,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
    
     @IBAction func button4Activated(_ sender: UIButton) {
         if sender.currentTitle == "VIP" {
-            disableAllTextFields()
             secondRowButton = SecondRowButtonType.VIP
+            setActiveTextFields()
         }
         
         if sender.currentTitle == "Contract" {
-            enableAllTextField()
-            disableTextField(textField: dateOfVisit)
-            disableTextField(textField: company)
-
             secondRowButton = SecondRowButtonType.Contract
+            setActiveTextFields()
         }
     }
     
     
     @IBAction func button5Activated(_ sender: UIButton) {
         if sender.currentTitle == "SeasonPass" {
-            enableAllTextField()
-            disableTextField(textField: dateOfVisit)
-            disableTextField(textField: project)
-            disableTextField(textField: company)
-            
             secondRowButton = SecondRowButtonType.SeasonPass
+            setActiveTextFields()
         }
     }
     
@@ -362,7 +321,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // FoodServiceEmployee
             if secondRowButton == SecondRowButtonType.FoodService {
                 do {
-                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
+                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
                     
                     pass = CheckPoint.generatePass(entrant: foodServiceEmployee)
                 } catch {
@@ -373,7 +332,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // RideServiceEmployee
             if secondRowButton == SecondRowButtonType.RideService {
                 do {
-                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
+                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
                     
                     pass = CheckPoint.generatePass(entrant: rideServiceEmployee)
                 } catch {
@@ -384,7 +343,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // MaintenanceEmployee
             if secondRowButton == SecondRowButtonType.Maintenance {
                 do {
-                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
+                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
                     
                     pass = CheckPoint.generatePass(entrant: maintenanceEmployee)
                 } catch {
@@ -396,7 +355,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if secondRowButton == SecondRowButtonType.Contract {
                 if let projectNumberUnwrapped = project.text {
                     do {
-                        let contractEmployee = try ContractEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, projectNumber: Int(projectNumberUnwrapped))
+                        let contractEmployee = try ContractEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, projectNumber: Int(projectNumberUnwrapped), dateOfBirth: nil)
                         
                         pass = CheckPoint.generatePass(entrant: contractEmployee)
                     } catch {
@@ -407,7 +366,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
         case .Manager:
             do {
-                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text)
+                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
                 
                 pass = CheckPoint.generatePass(entrant: manager)
             } catch {
@@ -432,6 +391,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         }
+        validateAllTextFields()
         
     }
     
@@ -611,6 +571,164 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
         self.present(alert, animated: true)
     }
-
+    
+    
+    // Extra Credit
+    // check if the textField is enabled and have allowed length: longer than 2 char
+    func validateTextField(textField: UITextField) {
+        // branch to handle Zip Code
+        if textField.isEnabled == true && textField.placeholder == "Zip Code" {
+            if textField.text!.count < 3 || textField.text!.isNumber == false {
+                genericAlert(error: "Input for \(textField.placeholder!) can only be numerical, longer than 2 digits")
+            }
+        }
+        // branch to handle all the textfields
+        if textField.isEnabled == true && textField.text!.count < 3 {
+            genericAlert(error: "Input for \(textField.placeholder!) shoud be longer than 2 characters")
+        }
+    }
+    
+    func validateAllTextFields() {
+        validateTextField(textField: firstName)
+        validateTextField(textField: lastName)
+        validateTextField(textField: project)
+        validateTextField(textField: streetAddress)
+        validateTextField(textField: state)
+        validateTextField(textField: city)
+        validateTextField(textField: zipCode)
+        
+    }
+    
+    // function to set placeholders for textfields
+    func insertPlaceHolders() {
+        firstName.placeholder = "First Name"
+        lastName.placeholder = "Last Name"
+        streetAddress.placeholder = "Street Address"
+        city.placeholder = "City"
+        state.placeholder = "State"
+        project.placeholder = "Project"
+        zipCode.placeholder = "Zip Code"
+    }
+    
+    // function to add Done button for all the input fields (Keyboard, UIPicker)
+    func addDoneButton() {
+        // toolbar
+        let toolBar = UIToolbar().ToolbarPiker(mySelect: #selector(ViewController.dismissPicker))
+        
+        dateOfBirth.inputAccessoryView = toolBar
+        dateOfVisit.inputAccessoryView = toolBar
+        project.inputAccessoryView = toolBar
+        firstName.inputAccessoryView = toolBar
+        lastName.inputAccessoryView = toolBar
+        company.inputAccessoryView = toolBar
+        streetAddress.inputAccessoryView = toolBar
+        city.inputAccessoryView = toolBar
+        state.inputAccessoryView = toolBar
+        zipCode.inputAccessoryView = toolBar
+    }
+    
+    // function to enable/disable textfields
+    func setActiveTextFields() {
+        
+        guard let firstRowButtonUnwrapped = firstRowButton else {
+            print("Not gonna happen!")
+            return
+        }
+        
+        switch firstRowButtonUnwrapped {
+        case .Guest:
+            // Child
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .Child {
+                    disableAllTextFields()
+                    enableTextField(textField: dateOfBirth)
+                }
+            }
+            // Adult
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .Adult {
+                    disableAllTextFields()
+                }
+            }
+            // Senior
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .Senior {
+                    disableAllTextFields()
+                    enableTextField(textField: dateOfBirth)
+                    enableTextField(textField: firstName)
+                    enableTextField(textField: lastName)
+                }
+            }
+            // VIP
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .VIP {
+                    disableAllTextFields()
+                }
+            }
+            // SeasonPass
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .SeasonPass {
+                    enableAllTextField()
+                    disableTextField(textField: dateOfVisit)
+                    disableTextField(textField: project)
+                    disableTextField(textField: company)
+                }
+            }
+            
+        case .Employee:
+            // Food Service
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .FoodService {
+                    enableAllTextField()
+                    disableTextField(textField: dateOfVisit)
+                    disableTextField(textField: project)
+                    disableTextField(textField: company)
+                }
+            }
+            // Ride Service
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .RideService {
+                    enableAllTextField()
+                    disableTextField(textField: dateOfVisit)
+                    disableTextField(textField: project)
+                    disableTextField(textField: company)
+                }
+            }
+            // Maintenance
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .Maintenance {
+                    enableAllTextField()
+                    disableTextField(textField: dateOfVisit)
+                    disableTextField(textField: project)
+                    disableTextField(textField: company)
+                }
+            }
+            // Contract
+            if let secondRowButtonUnwrapped = secondRowButton {
+                if secondRowButtonUnwrapped == .Contract {
+                    enableAllTextField()
+                    disableTextField(textField: dateOfVisit)
+                    disableTextField(textField: company)
+                }
+            }
+            
+        case.Manager:
+            enableAllTextField()
+            disableTextField(textField: dateOfVisit)
+            disableTextField(textField: project)
+            disableTextField(textField: company)
+            
+        case .Vendor:
+            enableAllTextField()
+            disableTextField(textField: project)
+            disableTextField(textField: streetAddress)
+            disableTextField(textField: city)
+            disableTextField(textField: state)
+            disableTextField(textField: zipCode)
+        }
+        
+    }
+        
+    
 }
 
