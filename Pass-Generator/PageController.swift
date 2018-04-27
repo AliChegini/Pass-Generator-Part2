@@ -149,6 +149,8 @@ class PageController: UIViewController {
             if ridesAccessUnwrapped.count == 0 {
                 result.text = "No Ride Access!"
                 playWrongAnswerSound()
+            } else {
+                playCorrectAnswerSound()
             }
         }
     }
@@ -158,6 +160,7 @@ class PageController: UIViewController {
         result.backgroundColor = .white
         if let discountOnFoodUnwrapped = pass?.discountOnFood, let discountOnMerchandiseUnwrapped = pass?.discountOnMerchandise {
             result.text = "\n\(discountOnFoodUnwrapped)% Food Discount\n\(discountOnMerchandiseUnwrapped)% Merch Discount"
+            playCorrectAnswerSound()
         } else {
             result.text = "No Discount!"
             playWrongAnswerSound()

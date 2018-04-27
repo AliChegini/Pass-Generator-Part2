@@ -87,14 +87,22 @@
 				7C8CB011203E722D00B3B800 /* TestCases.swift */,
 				7C2361CA207DEBB50082B0A9 /* Extension.swift */,
 				7C1ECC55200E588000A1F242 /* Main.storyboard */,
-				7C17552A2092A3C10085A3CD /* AccessDenied.wav */,
-				7C17552B2092A3C20085A3CD /* AccessGranted.wav */,
 				7CD30B49208F5C90006A1BF1 /* FaceImageAsset.png */,
+				7CD890C22093C457000B5E52 /* AudioFiles */,
 				7C1ECC58200E588000A1F242 /* Assets.xcassets */,
 				7C1ECC5A200E588000A1F242 /* LaunchScreen.storyboard */,
 				7C1ECC5D200E588000A1F242 /* Info.plist */,
 			);
 			path = "Pass-Generator";
+			sourceTree = "<group>";
+		};
+		7CD890C22093C457000B5E52 /* AudioFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7C17552A2092A3C10085A3CD /* AccessDenied.wav */,
+				7C17552B2092A3C20085A3CD /* AccessGranted.wav */,
+			);
+			path = AudioFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
