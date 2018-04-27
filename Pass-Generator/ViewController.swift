@@ -63,28 +63,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.hideKeyboardWhenTappedAround()
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            // Move the view up, so keyboard have space
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height/2
-            }
-        }
-    }
-    
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        // reset the view y origin if it has been moved
-        if self.view.frame.origin.y < 0 {
-            self.view.frame.origin.y = 0
-        }
-    }
-    
-    
-    @objc func dismissPicker() {
-        view.endEditing(true)
-    }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -263,17 +241,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // There are 5 options for Guests
             //Child
             if secondRowButton == SecondRowButtonType.Child {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                createDateFormatter()
-                if let dateOfBirthUnwrapped = dateOfBirth.text {
-                    let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
-                    do {
-                        let child = try ChildGuest(dateOfBirth: dateFromString)
-                        pass = CheckPoint.generatePass(entrant: child)
-                    } catch {
-                        genericAlert(error: error)
-                    }
+                let dateFromString = createDateFormatter(textField: dateOfBirth)
+                do {
+                    let child = try ChildGuest(dateOfBirth: dateFromString)
+                    pass = CheckPoint.generatePass(entrant: child)
+                } catch {
+                    genericAlert(error: error)
                 }
             }
             
@@ -286,17 +259,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             // Senior
             if secondRowButton == SecondRowButtonType.Senior {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                
-                if let dateOfBirthUnwrapped = dateOfBirth.text {
-                    let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
-                    do {
-                        let senior = try SeniorGuest(firstName: firstName.text, lastName: lastName.text, dateOfBirth: dateFromString)
-                        pass = CheckPoint.generatePass(entrant: senior)
-                    } catch {
-                        genericAlert(error: error)
-                    }
+                let dateFromString = createDateFormatter(textField: dateOfBirth)
+                do {
+                    let senior = try SeniorGuest(firstName: firstName.text, lastName: lastName.text, dateOfBirth: dateFromString)
+                    pass = CheckPoint.generatePass(entrant: senior)
+                } catch {
+                    genericAlert(error: error)
                 }
             }
             
@@ -308,18 +276,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             // SeasonPass
             if secondRowButton == SecondRowButtonType.SeasonPass {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                
-                if let dateOfBirthUnwrapped = dateOfBirth.text {
-                    let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
-                    do {
-                        let seasonPassGuest = try SeasonPassGuest(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
-                        
-                        pass = CheckPoint.generatePass(entrant: seasonPassGuest)
-                    } catch {
-                        genericAlert(error: error)
-                    }
+                let dateFromString = createDateFormatter(textField: dateOfBirth)
+                do {
+                    let seasonPassGuest = try SeasonPassGuest(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
+                    
+                    pass = CheckPoint.generatePass(entrant: seasonPassGuest)
+                } catch {
+                    genericAlert(error: error)
                 }
             }
             
@@ -327,8 +290,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // There are 4 options for employees
             // FoodServiceEmployee
             if secondRowButton == SecondRowButtonType.FoodService {
+                let dateFromString = createDateFormatter(textField: dateOfBirth)
                 do {
-                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    let foodServiceEmployee = try FoodServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
                     
                     pass = CheckPoint.generatePass(entrant: foodServiceEmployee)
                 } catch {
@@ -338,8 +302,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             // RideServiceEmployee
             if secondRowButton == SecondRowButtonType.RideService {
+                let dateFromString = createDateFormatter(textField: dateOfBirth)
                 do {
-                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    let rideServiceEmployee = try RideServiceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
                     
                     pass = CheckPoint.generatePass(entrant: rideServiceEmployee)
                 } catch {
@@ -349,8 +314,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             // MaintenanceEmployee
             if secondRowButton == SecondRowButtonType.Maintenance {
+                let dateFromString = createDateFormatter(textField: dateOfBirth)
                 do {
-                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: nil)
+                    let maintenanceEmployee = try MaintenanceEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
                     
                     pass = CheckPoint.generatePass(entrant: maintenanceEmployee)
                 } catch {
@@ -361,8 +327,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             // ContractEmployee
             if secondRowButton == SecondRowButtonType.Contract {
                 if let projectNumberUnwrapped = project.text {
+                    let dateFromString = createDateFormatter(textField: dateOfBirth)
                     do {
-                        let contractEmployee = try ContractEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, projectNumber: Int(projectNumberUnwrapped), dateOfBirth: nil)
+                        let contractEmployee = try ContractEmployee(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, projectNumber: Int(projectNumberUnwrapped), dateOfBirth: dateFromString)
                         
                         pass = CheckPoint.generatePass(entrant: contractEmployee)
                     } catch {
@@ -372,29 +339,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         case .Manager:
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy"
-            
-            if let dateOfBirthUnwrapped = dateOfBirth.text {
-                let dateFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
-                    do {
-                        let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
-                        
-                        pass = CheckPoint.generatePass(entrant: manager)
-                    } catch {
-                        genericAlert(error: error)
-                }
+            let dateFromString = createDateFormatter(textField: dateOfBirth)
+            do {
+                let manager = try Manager(firstName: firstName.text, lastName: lastName.text, streetAddress: streetAddress.text, city: city.text, state: state.text, zipCode: zipCode.text, dateOfBirth: dateFromString)
+                
+                pass = CheckPoint.generatePass(entrant: manager)
+            } catch {
+                genericAlert(error: error)
             }
             
-            
         case .Vendor:
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy"
+            let dateOfBirthFromString = createDateFormatter(textField: dateOfBirth)
+            let dateOfVisitFromString = createDateFormatter(textField: dateOfVisit)
             
-            if let vendorCompanyUnwrapped = company.text, let dateOfBirthUnwrapped = dateOfBirth.text, let dateOfVisitUnwrapped = dateOfVisit.text {
-                
-                let dateOfBirthFromString: Date? = dateFormatter.date(from: dateOfBirthUnwrapped)
-                let dateOfVisitFromString: Date? = dateFormatter.date(from: dateOfVisitUnwrapped)
+            if let vendorCompanyUnwrapped = company.text {
                 do {
                     let vendor = try Vendor(firstName: firstName.text, lastName: lastName.text, vendorCompany: VendorCompany(rawValue: vendorCompanyUnwrapped), dateOfBirth: dateOfBirthFromString, dateOfVisit: dateOfVisitFromString)
                     
@@ -404,9 +362,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
             }
             
+        // End of Switch
         }
-        validateAllTextFields()
         
+        validateAllTextFields()
     }
     
     

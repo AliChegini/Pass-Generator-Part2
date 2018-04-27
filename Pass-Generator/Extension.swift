@@ -46,10 +46,42 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    // create Date Formatter and return
-    func createDateFormatter() {
+    
+    // create Date Formatter
+    // return Date? from String
+    func createDateFormatter(textField: UITextField) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
+        
+        var dateFromString: Date?
+        if let dateUnwrapped = textField.text {
+            dateFromString = dateFormatter.date(from: dateUnwrapped)
+        }
+        return dateFromString
+    }
+    
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            // Move the view up, so keyboard have space
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height/2
+            }
+        }
+    }
+    
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        // reset the view y origin if it has been moved
+        if self.view.frame.origin.y < 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    
+    @objc func dismissPicker() {
+        view.endEditing(true)
     }
     
     
@@ -80,7 +112,7 @@ extension UIToolbar {
 
 
 // extension for handling empty textfields properly
-// "" this annoying case is covered
+// "" <-- this annoying case is covered
 extension Optional where Wrapped == String {
     var nilIfEmpty: String? {
         guard let strongSelf = self else {
@@ -97,6 +129,7 @@ extension String  {
         return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
 }
+
 
 
 

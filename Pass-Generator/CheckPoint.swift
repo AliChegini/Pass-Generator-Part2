@@ -59,9 +59,9 @@ class CheckPoint {
         case .SeasonPassGuest:
             do {
                 // Creating an instance
-                let seasonPassGuest = try SeasonPassGuest(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode)
+                let seasonPassGuest = try SeasonPassGuest(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
-                var pass = Pass(firstName: seasonPassGuest.firstName, lastName: seasonPassGuest.lastName, entrantType: seasonPassGuest.entrantType, dateOfBirth: seasonPassGuest.dateOfBirth, discountOnFood: seasonPassGuest.discountOnFood, discountOnMerchandise: seasonPassGuest.discountOnMerchandise)
+                var pass = Pass(firstName: seasonPassGuest.firstName, lastName: seasonPassGuest.lastName, entrantType: seasonPassGuest.entrantType, dateOfBirth: seasonPassGuest.dateOfBirth)
                 pass.rideAccess = seasonPassGuest.rideAccess
                 pass.areaAccess = seasonPassGuest.areaAccess
                 pass.discountOnFood = seasonPassGuest.discountOnFood
@@ -109,7 +109,7 @@ class CheckPoint {
                 // Creating an instance
                 let rideServiceEmployee = try RideServiceEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
-                var pass = Pass(firstName: rideServiceEmployee.firstName, lastName: rideServiceEmployee.lastName, entrantType: rideServiceEmployee.entrantType)
+                var pass = Pass(firstName: rideServiceEmployee.firstName, lastName: rideServiceEmployee.lastName, entrantType: rideServiceEmployee.entrantType, dateOfBirth: rideServiceEmployee.dateOfBirth)
                 pass.rideAccess = rideServiceEmployee.rideAccess
                 pass.areaAccess = rideServiceEmployee.areaAccess
                 pass.discountOnFood = rideServiceEmployee.discountOnFood
@@ -125,7 +125,7 @@ class CheckPoint {
                 // Creating an instance
                 let maintenanceEmployee = try MaintenanceEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
-                var pass = Pass(firstName: maintenanceEmployee.firstName, lastName: maintenanceEmployee.lastName, entrantType: maintenanceEmployee.entrantType)
+                var pass = Pass(firstName: maintenanceEmployee.firstName, lastName: maintenanceEmployee.lastName, entrantType: maintenanceEmployee.entrantType, dateOfBirth: maintenanceEmployee.dateOfBirth)
                 pass.rideAccess = maintenanceEmployee.rideAccess
                 pass.areaAccess = maintenanceEmployee.areaAccess
                 pass.discountOnFood = maintenanceEmployee.discountOnFood
@@ -155,9 +155,9 @@ class CheckPoint {
         case .ContractEmployee:
             do {
                 // Creating an instance
-                let contractEmployee = try ContractEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, projectNumber: entrant.projectNumber, dateOfBirth: nil)
+                let contractEmployee = try ContractEmployee(firstName: entrant.firstName, lastName: entrant.lastName, streetAddress: entrant.streetAddress, city: entrant.city, state: entrant.state, zipCode: entrant.zipCode, entrantType: entrant.entrantType, projectNumber: entrant.projectNumber, dateOfBirth: entrant.dateOfBirth)
                 // Constructing a pass
-                var pass = Pass(firstName: contractEmployee.firstName, lastName: contractEmployee.lastName, streetAddress: contractEmployee.streetAddress, city: contractEmployee.city, state: contractEmployee.state, zipCode: contractEmployee.zipCode, entrantType: contractEmployee.entrantType, dateOfBirth: entrant.dateOfBirth)
+                var pass = Pass(firstName: contractEmployee.firstName, lastName: contractEmployee.lastName, streetAddress: contractEmployee.streetAddress, city: contractEmployee.city, state: contractEmployee.state, zipCode: contractEmployee.zipCode, entrantType: contractEmployee.entrantType, dateOfBirth: contractEmployee.dateOfBirth)
                 pass.rideAccess = contractEmployee.rideAccess
                 pass.areaAccess = contractEmployee.areaAccess
                 
@@ -190,7 +190,7 @@ class CheckPoint {
         var phrase = ""
         if pass.areaAccess.contains(area) {
             // Extra credit, preventing swipe
-            // if pass is already swiped, pass.swipe is not nil
+            // if pass is already swiped, pass.swipeTime is not nil
             // prevent new swipes sooner than 5 seconds
             if let registeredSwipeTime = pass.swipeTime {
                 let currentTime = Date()
@@ -201,8 +201,8 @@ class CheckPoint {
                     pass.swipeTime = currentTime
                     phrase = "\(pass.entrantType) --- Allowed entry to \(area)\n \(pass.swipeTime!)"
                 }
-                // if pass is not swiped yet, pass.swipe is nil
-                // current time will be assigned to pass.swipeTime and allow entry
+            // if pass is not swiped yet, pass.swipeTime is nil
+            // current time will be assigned to pass.swipeTime and allow entry
             } else {
                 pass.swipeTime = Date()
                 phrase = "Pass swiped at: \(pass.swipeTime!)\n\(pass.entrantType) --- Allowed entry to \(area)\n \(pass.swipeTime!)"

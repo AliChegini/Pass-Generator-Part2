@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class PageController: UIViewController {
 
-    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var passType: UILabel!
     @IBOutlet weak var rideAccess: UILabel!
@@ -18,13 +18,16 @@ class PageController: UIViewController {
     @IBOutlet weak var merchDiscount: UILabel!
     @IBOutlet weak var result: UILabel!
     
-    
     var pass: Pass?
     
-    
+    // Audio variables
+    var accessDenied: SystemSoundID = 0
+    var accessGranted: SystemSoundID = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadSounds()
         
         if let firstNameUnwarpped = pass?.firstName, let lastNameUnwarpped = pass?.lastName {
             name.text = "\(firstNameUnwarpped) \(lastNameUnwarpped)"
@@ -69,8 +72,10 @@ class PageController: UIViewController {
         // since user will only see this page if pass is initialized
         if pass!.areaAccess.contains(.amusementAreas) {
             result.backgroundColor = .green
+            playCorrectAnswerSound()
         } else {
             result.backgroundColor = .red
+            playWrongAnswerSound()
         }
         result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .amusementAreas)
     }
@@ -81,8 +86,10 @@ class PageController: UIViewController {
         // since user will only see this page if pass is initialized
         if pass!.areaAccess.contains(.kitchenAreas) {
             result.backgroundColor = .green
+            playCorrectAnswerSound()
         } else {
             result.backgroundColor = .red
+            playWrongAnswerSound()
         }
         result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .kitchenAreas)
     }
@@ -93,8 +100,10 @@ class PageController: UIViewController {
         // since user will only see this page if pass is initialized
         if pass!.areaAccess.contains(.officeAreas) {
             result.backgroundColor = .green
+            playCorrectAnswerSound()
         } else {
             result.backgroundColor = .red
+            playWrongAnswerSound()
         }
         result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .officeAreas)
     }
@@ -105,8 +114,10 @@ class PageController: UIViewController {
         // since user will only see this page if pass is initialized
         if pass!.areaAccess.contains(.maintenanceAreas) {
             result.backgroundColor = .green
+            playCorrectAnswerSound()
         } else {
             result.backgroundColor = .red
+            playWrongAnswerSound()
         }
         result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .maintenanceAreas)
     }
@@ -117,8 +128,10 @@ class PageController: UIViewController {
         // since user will only see this page if pass is initialized
         if pass!.areaAccess.contains(.rideControlAreas) {
             result.backgroundColor = .green
+            playCorrectAnswerSound()
         } else {
             result.backgroundColor = .red
+            playWrongAnswerSound()
         }
         result.text = CheckPoint.checkPassForAreaAccess(pass: &pass!, to: .rideControlAreas)
     }
@@ -135,6 +148,7 @@ class PageController: UIViewController {
             
             if ridesAccessUnwrapped.count == 0 {
                 result.text = "No Ride Access!"
+                playWrongAnswerSound()
             }
         }
     }
@@ -146,7 +160,30 @@ class PageController: UIViewController {
             result.text = "\n\(discountOnFoodUnwrapped)% Food Discount\n\(discountOnMerchandiseUnwrapped)% Merch Discount"
         } else {
             result.text = "No Discount!"
+            playWrongAnswerSound()
         }
+    }
+    
+    
+    
+    // Helper functions
+    // load and play sounds for correct and wrong answer
+    func loadSounds() {
+        let pathToCorrectSoundFile = Bundle.main.path(forResource: "AccessGranted", ofType: "wav")
+        let correctSoundURL = URL(fileURLWithPath: pathToCorrectSoundFile!)
+        AudioServicesCreateSystemSoundID(correctSoundURL as CFURL, &accessGranted)
+        
+        let pathToWrongSoundFile = Bundle.main.path(forResource: "AccessDenied", ofType: "wav")
+        let wrongSoundURL = URL(fileURLWithPath: pathToWrongSoundFile!)
+        AudioServicesCreateSystemSoundID(wrongSoundURL as CFURL, &accessDenied)
+    }
+    
+    func playCorrectAnswerSound() {
+        AudioServicesPlaySystemSound(accessGranted)
+    }
+    
+    func playWrongAnswerSound() {
+        AudioServicesPlaySystemSound(accessDenied)
     }
     
     
